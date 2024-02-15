@@ -11,7 +11,7 @@ import za.co.emmtapp.erpservice.common.ApiResponse;
 import za.co.emmtapp.erpservice.common.CrudApi;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
-import za.co.emmtapp.erpservice.application.service.RegistrationService;
+import za.co.emmtapp.erpservice.application.service.ApplicationService;
 import za.co.emmtapp.erpservice.utils.ErpUtils;
 
 import static za.co.emmtapp.erpservice.common.ApiConstants.APP_SUCCESS_MESSAGE;
@@ -20,9 +20,9 @@ import static za.co.emmtapp.erpservice.common.ApiConstants.APP_SUCCESS_MESSAGE;
 @RequestMapping("/application")
 @Slf4j
 @RequiredArgsConstructor
-public class RegistrationAPI implements CrudApi<ApplicationDTO> {
+public class ApplicationAPI implements CrudApi<ApplicationDTO> {
 
-    private final RegistrationService registrationService;
+    private final ApplicationService registrationService;
 
     @PostMapping("/apply")
     @Override

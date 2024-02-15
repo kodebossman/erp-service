@@ -11,8 +11,7 @@ import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 @RequiredArgsConstructor
 @Transactional
 
-public class RegistrationServiceImpl implements RegistrationService{
-
+public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public ApplicationDTO createRegistration(ApplicationDTO applicationDTO) {
