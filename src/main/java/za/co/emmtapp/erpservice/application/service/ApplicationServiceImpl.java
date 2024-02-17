@@ -10,18 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import za.co.emmtapp.erpservice.application.model.Application;
-import za.co.emmtapp.erpservice.application.model.Documentation;
-import za.co.emmtapp.erpservice.application.model.EmploymentDetails;
-import za.co.emmtapp.erpservice.application.model.NextOfKin;
+import za.co.emmtapp.erpservice.application.model.*;
 import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 import za.co.emmtapp.erpservice.application.model.dto.EmploymentDetailsDTO;
 import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
-import za.co.emmtapp.erpservice.application.repos.ApplicationRepository;
-import za.co.emmtapp.erpservice.application.repos.DocumentationRepository;
-import za.co.emmtapp.erpservice.application.repos.EmploymentDetailsRepository;
-import za.co.emmtapp.erpservice.application.repos.NextOfKinRepository;
+import za.co.emmtapp.erpservice.application.repos.*;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 
@@ -46,6 +40,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Autowired
     EmploymentDetailsRepository employmentDetailsRepository;
 
+    @Autowired
+    PreviousQualificationsRepository qualificationsRepository;
+
     @Override
     public ApplicationDTO createRegistration(ApplicationDTO applicationDTO) {
 
@@ -61,6 +58,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         EmploymentDetails employmentDetails = new EmploymentDetails();
         BeanUtils.copyProperties(applicationDTO.getEmploymentDetails(), employmentDetails);
+
+        PreviousQualifications previousQualifications = new PreviousQualifications();
+        BeanUtils.copyProperties(applicationDTO.getPreviousQualifications(), previousQualifications);
 
 
         try {
@@ -88,10 +88,17 @@ public class ApplicationServiceImpl implements ApplicationService {
             log.info(e.getMessage());
         }
 
+        try {
+            previousQualifications = qualificationsRepository.save(previousQualifications);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+
         BeanUtils.copyProperties(application, applicationDTO);
         BeanUtils.copyProperties(documentation, applicationDTO.getDocumentation());
         BeanUtils.copyProperties(nextOfKin, applicationDTO.getNextOfKin());
         BeanUtils.copyProperties(employmentDetails, applicationDTO.getEmploymentDetails());
+        BeanUtils.copyProperties(previousQualifications, applicationDTO.getPreviousQualifications());
 
         return applicationDTO;
     }

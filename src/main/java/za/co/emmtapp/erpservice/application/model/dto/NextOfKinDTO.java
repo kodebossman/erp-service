@@ -1,6 +1,5 @@
 package za.co.emmtapp.erpservice.application.model.dto;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 

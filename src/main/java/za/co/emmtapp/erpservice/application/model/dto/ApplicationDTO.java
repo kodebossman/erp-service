@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import za.co.emmtapp.erpservice.application.model.PreviousQualifications;
 import za.co.emmtapp.erpservice.common.BaseDto;
 
 @Getter
@@ -31,6 +32,6 @@ public class ApplicationDTO extends BaseDto {
     private NextOfKinDTO nextOfKin;
     private DocumentationDTO documentation;
     private EmploymentDetailsDTO employmentDetails;
-//    private PreviousQualifications previousQualifications;
+    private PreviousQualifications previousQualifications;
 
 }
