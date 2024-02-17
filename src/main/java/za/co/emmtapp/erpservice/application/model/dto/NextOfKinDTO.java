@@ -1,17 +1,13 @@
 package za.co.emmtapp.erpservice.application.model.dto;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import za.co.emmtapp.erpservice.common.BaseDto;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ApplicationDTO extends BaseDto {
-
+public class NextOfKinDTO {
+    private String applicantId;
     private String title;
     private String firstName;
     private String lastName;
@@ -26,11 +22,5 @@ public class ApplicationDTO extends BaseDto {
     private String emailAddress;
     private String nationality;
     private String gender;
-    private String applicationType;
-    private String applicationDate;
-    private NextOfKinDTO nextOfKin;
-    private DocumentationDTO documentation;
-    private EmploymentDetailsDTO employmentDetails;
-//    private PreviousQualifications previousQualifications;
-
+    private String relationshipToApplicant;
 }

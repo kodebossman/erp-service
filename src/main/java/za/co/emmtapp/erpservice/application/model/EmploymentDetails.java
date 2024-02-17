@@ -8,23 +8,32 @@ import lombok.ToString;
 import za.co.emmtapp.erpservice.common.BaseEntity;
 
 @Entity
-@Table(name = "employment_detail", indexes = {@Index(name = "indx_empldetail", columnList = "applicantId", unique = true)})
+@Table(name = "employment_details")
 @Getter
 @Setter
 @ToString
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class EmploymentDetails extends BaseEntity {
-
-    private String nameOfEmployer;
-    private String position;
-    private String address;
-    private String startDate;
-    private  String endDate;
-    private String employmentStatus;
-    private String city;
-    private String region;
-    private String country;
+    @Column(name = "applicant_id")
     private Long applicantId;
+    @Column(name = "name_of_employer")
+    private String nameOfEmployer;
+    @Column(name = "position")
+    private String position;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "start_date")
+    private String startDate;
+    @Column(name = "end_date")
+    private  String endDate;
+    @Column(name = "employment_status")
+    private String employmentStatus;
+    @Column(name = "city")
+    private String city;
+    @Column(name = "region")
+    private String region;
+    @Column(name = "country")
+    private String country;
 
 }

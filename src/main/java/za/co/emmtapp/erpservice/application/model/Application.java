@@ -5,17 +5,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
+import za.co.emmtapp.erpservice.application.model.dto.EmploymentDetailsDTO;
+import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
 import za.co.emmtapp.erpservice.common.BaseEntity;
 
 @Entity
-@Table(name = "registration", indexes = {@Index(name = "indx_registrations", columnList = "mobileNumber", unique = true)})
+@Table(name = "registration")
 @Getter
 @Setter
 @ToString
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Application extends BaseEntity {
-
     @Column(name = "title", nullable = false, length = 45)
     private String title;
 
@@ -49,7 +51,7 @@ public class Application extends BaseEntity {
     @Column(name = "phone", unique = true, nullable = false, length = 12)
     private String mobileNumber;
 
-    @Column(name = "phone", unique = true, nullable = false, length = 12)
+    @Column(name = "email_address", unique = true, nullable = false, length = 12)
     private String emailAddress;
 
     @Column(name = "nationality")
@@ -63,6 +65,5 @@ public class Application extends BaseEntity {
 
     @Column(name = "application_date")
     private String applicationDate;
-
 
 }

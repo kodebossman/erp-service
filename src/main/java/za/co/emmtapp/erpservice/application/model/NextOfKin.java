@@ -2,18 +2,22 @@ package za.co.emmtapp.erpservice.application.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import za.co.emmtapp.erpservice.common.BaseEntity;
 
 @Entity
-@Table(name = "nextofkin", indexes = {@Index(name = "indx_nextofkin", columnList = "mobileNumber", unique = true)})
+@Table(name = "next_of_kin")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class NextOfKin {
+public class NextOfKin extends BaseEntity {
+
+    @Column(name = "applicant_id")
+    private String applicantId;
 
     @Column(name = "title", nullable = false, length = 45)
     private String title;
@@ -48,7 +52,7 @@ public class NextOfKin {
     @Column(name = "phone", unique = true, nullable = false, length = 12)
     private String mobileNumber;
 
-    @Column(name = "phone", unique = true, nullable = false, length = 12)
+    @Column(name = "email_address", unique = true, nullable = false, length = 12)
     private String emailAddress;
 
     @Column(name = "nationality")
@@ -59,10 +63,4 @@ public class NextOfKin {
 
     @Column(name = "relationship_to_applicant")
     private String relationshipToApplicant;
-
-    @Column(name = "applicant_id")
-    private String applicantId;
-
-
-
 }
