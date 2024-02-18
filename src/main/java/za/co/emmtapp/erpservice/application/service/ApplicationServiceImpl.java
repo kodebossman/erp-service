@@ -57,36 +57,14 @@ public class ApplicationServiceImpl implements ApplicationService {
         PreviousQualifications previousQualifications = new PreviousQualifications();
         BeanUtils.copyProperties(applicationDTO.getPreviousQualifications(), previousQualifications);
 
-
         try {
             documentation = documentationRepository.save(documentation);
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
-
-
-        try {
             application = applicationRepository.save(application);
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
-
-        try {
             nextOfKin = nextOfKinRepository.save(nextOfKin);
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
-
-        try {
             employmentDetails = employmentDetailsRepository.save(employmentDetails);
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
-
-        try {
             previousQualifications = qualificationsRepository.save(previousQualifications);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            e.printStackTrace();
         }
 
         BeanUtils.copyProperties(application, applicationDTO);
