@@ -6,5 +6,5 @@ import za.co.emmtapp.erpservice.application.model.NextOfKin;
 import java.util.Optional;
 
 public interface NextOfKinRepository extends JpaRepository<NextOfKin,Long> {
-    Optional<NextOfKin> findByApplicantId(String applicantId);
+    Optional<NextOfKin> findByApplicantId(Long applicantId);
 }

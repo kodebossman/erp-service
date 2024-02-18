@@ -19,6 +19,7 @@ import za.co.emmtapp.erpservice.common.CrudApi;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.application.service.ApplicationService;
 
+import static za.co.emmtapp.erpservice.common.ApiConstants.APP_RETRIEVE_SUCCESS;
 import static za.co.emmtapp.erpservice.common.ApiConstants.APP_SUCCESS_MESSAGE;
 
 @RestController
@@ -55,21 +56,10 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
         return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, res);
     }
 
-//    @GetMapping("getAll")
-//    public ApiResponse<PaginationResult<Application>> findAllApps(@RequestParam(defaultValue = "") String search,
-//                                                                  @RequestParam(defaultValue = "1") Integer page,
-//                                                                  @RequestParam(defaultValue = "10") Integer size,
-//                                                                  @RequestParam(defaultValue = "id") String sortBy) {
-//
-//        var res = registrationService.findAll(search, page, size, sortBy);
-//        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, res);
-//    }
-
-
     @Override
     public ApiResponse<ApplicationDTO> find(Long id) {
         var application = registrationService.find(id);
-        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, application);
+        return new ApiResponse<>(HttpStatus.OK.value(), APP_RETRIEVE_SUCCESS, application);
     }
 
 

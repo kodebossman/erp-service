@@ -8,10 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.*;
-import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
-import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
-import za.co.emmtapp.erpservice.application.model.dto.EmploymentDetailsDTO;
-import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
+import za.co.emmtapp.erpservice.application.model.dto.*;
 import za.co.emmtapp.erpservice.application.repos.*;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
@@ -64,7 +61,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             employmentDetails = employmentDetailsRepository.save(employmentDetails);
             previousQualifications = qualificationsRepository.save(previousQualifications);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
 
         BeanUtils.copyProperties(application, applicationDTO);
@@ -81,16 +78,52 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = applicationRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("application with provided Id not found")
         );
-
         ApplicationDTO applicationDTO = new ApplicationDTO();
-        BeanUtils.copyProperties(application, applicationDTO);
+        NextOfKinDTO nextOfKinDTO = new NextOfKinDTO();
+        DocumentationDTO documentationDTO = new DocumentationDTO();
+        EmploymentDetailsDTO employmentDetailsDTO = new EmploymentDetailsDTO();
+        PreviousQualificationsDTO previousQualificationsDTO = new PreviousQualificationsDTO();
+
+        if (application != null) {
+            Long applicationId = application.getId();
+
+            NextOfKin nextOfKin = nextOfKinRepository.findById(applicationId).orElseThrow(
+                    () -> new ResourceNotFoundException("application with provided Id not found")
+            );
+
+            Documentation documentation = documentationRepository.findById(applicationId).orElseThrow(
+                    () -> new ResourceNotFoundException("application with provided Id not found")
+            );
+
+            EmploymentDetails employmentDetails = employmentDetailsRepository.findById(applicationId).orElseThrow(
+                    () -> new ResourceNotFoundException("application with provided Id not found")
+            );
+
+            PreviousQualifications qualifications = qualificationsRepository.findById(applicationId).orElseThrow(
+                    () -> new ResourceNotFoundException("application with provided Id not found")
+            );
+
+
+            BeanUtils.copyProperties(application, applicationDTO);
+            BeanUtils.copyProperties(nextOfKin, nextOfKinDTO);
+            BeanUtils.copyProperties(documentation, documentationDTO);
+            BeanUtils.copyProperties(employmentDetails, employmentDetailsDTO);
+            BeanUtils.copyProperties(qualifications, previousQualificationsDTO);
+
+            applicationDTO.setNextOfKin(nextOfKinDTO);
+            applicationDTO.setDocumentation(documentationDTO);
+            applicationDTO.setEmploymentDetails(employmentDetailsDTO);
+            applicationDTO.setPreviousQualifications(previousQualificationsDTO);
+
+        }
+
 
         return applicationDTO;
     }
 
     @Override
     public ApplicationDTO deleteApplication(ApplicationDTO applicationDTO) {
-        applicationRepository.deleteById(applicationDTO.getId());
+        applicationRepository.deleteByIdNumber(applicationDTO.getIdNumber());
         applicationRepository.delete(new Application());
         return applicationDTO;
     }

@@ -18,6 +18,8 @@ import java.util.List;
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PreviousQualifications extends BaseEntity {
+    @Column(name = "owner_id")
+    String ownerId;
     @Column(name = "institution_name")
     String nameOfInstitution;
     @Column(name = "highest_qualification")

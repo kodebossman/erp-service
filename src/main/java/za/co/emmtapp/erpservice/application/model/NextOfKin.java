@@ -17,7 +17,7 @@ import za.co.emmtapp.erpservice.common.BaseEntity;
 public class NextOfKin extends BaseEntity {
 
     @Column(name = "applicant_id")
-    private String applicantId;
+    private Long applicantId;
 
     @Column(name = "title", nullable = false, length = 45)
     private String title;

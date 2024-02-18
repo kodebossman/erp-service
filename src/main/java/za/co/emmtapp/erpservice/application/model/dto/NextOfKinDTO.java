@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NextOfKinDTO {
-    private String applicantId;
+    private Long applicantId;
     private String title;
     private String firstName;
     private String lastName;

@@ -11,4 +11,5 @@ public interface ApiConstants {
   String GOOGLE_MAPS_API_KEY="";
 
   String APP_SUCCESS_MESSAGE = "Application Created Successfully";
+  String APP_RETRIEVE_SUCCESS = "OK";
 }

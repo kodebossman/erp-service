@@ -11,7 +11,7 @@ import za.co.emmtapp.erpservice.common.BaseDto;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationDTO extends BaseDto {
+public class ApplicationDTO {
 
     private String title;
     private String firstName;
@@ -32,6 +32,6 @@ public class ApplicationDTO extends BaseDto {
     private NextOfKinDTO nextOfKin;
     private DocumentationDTO documentation;
     private EmploymentDetailsDTO employmentDetails;
-    private PreviousQualifications previousQualifications;
+    private PreviousQualificationsDTO previousQualifications;
 
 }
