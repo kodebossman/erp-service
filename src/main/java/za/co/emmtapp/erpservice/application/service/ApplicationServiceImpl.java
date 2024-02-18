@@ -123,9 +123,19 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public ApplicationDTO deleteApplication(ApplicationDTO applicationDTO) {
-        applicationRepository.deleteByIdNumber(applicationDTO.getIdNumber());
-        applicationRepository.delete(new Application());
-        return applicationDTO;
+
+        Application appToDelete = applicationRepository.findApplicationByIdNumber(applicationDTO.getIdNumber());
+
+        if (appToDelete != null) {
+            applicationRepository.deleteById(appToDelete.getId());
+            documentationRepository.deleteById(applicationDTO.getDocumentation().getOwnerId());
+            employmentDetailsRepository.deleteById(applicationDTO.getEmploymentDetails().getApplicantId());
+            nextOfKinRepository.deleteById(applicationDTO.getNextOfKin().getApplicantId());
+            qualificationsRepository.deleteById(applicationDTO.getPreviousQualifications().getOwnerId());
+            return applicationDTO;
+        }
+
+        return null;
     }
 
     @Override

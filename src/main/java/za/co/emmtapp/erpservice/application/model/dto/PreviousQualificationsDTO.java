@@ -7,6 +7,7 @@ import za.co.emmtapp.erpservice.application.model.CIMALevel;
 @Getter
 @Setter
 public class PreviousQualificationsDTO {
+    Long ownerId;
     String nameOfInstitution;
     String highestQualificationObtained;
     String isCIMARegistered;
