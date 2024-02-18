@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import za.co.emmtapp.erpservice.application.model.PersonalDetails;
 import za.co.emmtapp.erpservice.application.model.PreviousQualifications;
 import za.co.emmtapp.erpservice.common.BaseDto;
 
@@ -13,22 +14,7 @@ import za.co.emmtapp.erpservice.common.BaseDto;
 @NoArgsConstructor
 public class ApplicationDTO {
 
-    private String title;
-    private String firstName;
-    private String lastName;
-    private String preferredName;
-    private String idNumber;
-    private String address;
-    private String city;
-    private String province;
-    private String postalCode;
-    private String country;
-    private String mobileNumber;
-    private String emailAddress;
-    private String nationality;
-    private String gender;
-    private String applicationType;
-    private String applicationDate;
+    private PersonalDetailsDTO personalDetails;
     private NextOfKinDTO nextOfKin;
     private DocumentationDTO documentation;
     private EmploymentDetailsDTO employmentDetails;

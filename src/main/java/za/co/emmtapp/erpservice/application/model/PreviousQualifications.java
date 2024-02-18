@@ -8,8 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 import za.co.emmtapp.erpservice.common.BaseEntity;
 
-import java.util.List;
-
 @Entity
 @Table(name = "qualifications")
 @Getter
@@ -19,7 +17,7 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PreviousQualifications extends BaseEntity {
     @Column(name = "owner_id")
-    String ownerId;
+    Long ownerId;
     @Column(name = "institution_name")
     String nameOfInstitution;
     @Column(name = "highest_qualification")

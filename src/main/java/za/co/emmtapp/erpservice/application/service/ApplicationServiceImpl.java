@@ -22,13 +22,26 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
     private final DocumentationRepository documentationRepository;
+
+    private final DocumentService documentService;
+    private  final NextOfKinService nextOfKinService;
+
+    private final PersonalDetailsService personalDetailsService;
+    private  final EmploymentDetailsService employmentDetailsService;
+
+    private final PreviousQualificationsService previousQualificationsService;
     private final NextOfKinRepository nextOfKinRepository;
     private final EmploymentDetailsRepository employmentDetailsRepository;
     private final PreviousQualificationsRepository qualificationsRepository;
 
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository, DocumentationRepository documentationRepository, NextOfKinRepository nextOfKinRepository, EmploymentDetailsRepository employmentDetailsRepository, PreviousQualificationsRepository qualificationsRepository) {
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository, DocumentationRepository documentationRepository, DocumentService documentService, NextOfKinService nextOfKinService, PersonalDetailsService personalDetailsService, EmploymentDetailsService employmentDetailsService, PreviousQualificationsService previousQualificationsService, NextOfKinRepository nextOfKinRepository, EmploymentDetailsRepository employmentDetailsRepository, PreviousQualificationsRepository qualificationsRepository) {
         this.applicationRepository = applicationRepository;
         this.documentationRepository = documentationRepository;
+        this.documentService = documentService;
+        this.nextOfKinService = nextOfKinService;
+        this.personalDetailsService = personalDetailsService;
+        this.employmentDetailsService = employmentDetailsService;
+        this.previousQualificationsService = previousQualificationsService;
         this.nextOfKinRepository = nextOfKinRepository;
         this.employmentDetailsRepository = employmentDetailsRepository;
         this.qualificationsRepository = qualificationsRepository;
@@ -38,105 +51,55 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public ApplicationDTO createRegistration(ApplicationDTO applicationDTO) {
 
-        Application application = new Application();
-
-        BeanUtils.copyProperties(applicationDTO, application);
-
-        Documentation documentation = new Documentation();
-        BeanUtils.copyProperties(applicationDTO.getDocumentation(), documentation);
-
-        NextOfKin nextOfKin = new NextOfKin();
-        BeanUtils.copyProperties(applicationDTO.getNextOfKin(), nextOfKin);
-
-        EmploymentDetails employmentDetails = new EmploymentDetails();
-        BeanUtils.copyProperties(applicationDTO.getEmploymentDetails(), employmentDetails);
-
-        PreviousQualifications previousQualifications = new PreviousQualifications();
-        BeanUtils.copyProperties(applicationDTO.getPreviousQualifications(), previousQualifications);
-
         try {
-            documentation = documentationRepository.save(documentation);
-            application = applicationRepository.save(application);
-            nextOfKin = nextOfKinRepository.save(nextOfKin);
-            employmentDetails = employmentDetailsRepository.save(employmentDetails);
-            previousQualifications = qualificationsRepository.save(previousQualifications);
+            PersonalDetailsDTO personalDetailsDTO = personalDetailsService.create(applicationDTO.getPersonalDetails());
+            DocumentationDTO documentationDTO = documentService.create(applicationDTO.getDocumentation());
+            NextOfKinDTO nextOfKinDTO = nextOfKinService.create(applicationDTO.getNextOfKin());
+            EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.create(applicationDTO.getEmploymentDetails());
+            PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.create(applicationDTO.getPreviousQualifications());
+
+            applicationDTO.setPersonalDetails(personalDetailsDTO);
+            applicationDTO.setDocumentation(documentationDTO);
+            applicationDTO.setNextOfKin(nextOfKinDTO);
+            applicationDTO.setEmploymentDetails(employmentDetailsDTO);
+            applicationDTO.setPreviousQualifications(previousQualificationsDTO);
+
         } catch (Exception e) {
             log.info(e.getMessage());
         }
-
-        BeanUtils.copyProperties(application, applicationDTO);
-        BeanUtils.copyProperties(documentation, applicationDTO.getDocumentation());
-        BeanUtils.copyProperties(nextOfKin, applicationDTO.getNextOfKin());
-        BeanUtils.copyProperties(employmentDetails, applicationDTO.getEmploymentDetails());
-        BeanUtils.copyProperties(previousQualifications, applicationDTO.getPreviousQualifications());
-
         return applicationDTO;
     }
 
     @Override
     public ApplicationDTO find(Long id) {
-        Application application = applicationRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("application with provided Id not found")
-        );
+
         ApplicationDTO applicationDTO = new ApplicationDTO();
-        NextOfKinDTO nextOfKinDTO = new NextOfKinDTO();
-        DocumentationDTO documentationDTO = new DocumentationDTO();
-        EmploymentDetailsDTO employmentDetailsDTO = new EmploymentDetailsDTO();
-        PreviousQualificationsDTO previousQualificationsDTO = new PreviousQualificationsDTO();
 
-        if (application != null) {
-            Long applicationId = application.getId();
+        NextOfKinDTO nextOfKinDTO = nextOfKinService.find(id);
+        DocumentationDTO documentationDTO = documentService.find(id);
+        EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.find(id);
+        PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.find(id);
+        PersonalDetailsDTO personalDetailsDTO = personalDetailsService.find(id);
 
-            NextOfKin nextOfKin = nextOfKinRepository.findById(applicationId).orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
-            );
-
-            Documentation documentation = documentationRepository.findById(applicationId).orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
-            );
-
-            EmploymentDetails employmentDetails = employmentDetailsRepository.findById(applicationId).orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
-            );
-
-            PreviousQualifications qualifications = qualificationsRepository.findById(applicationId).orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
-            );
-
-
-            BeanUtils.copyProperties(application, applicationDTO);
-            BeanUtils.copyProperties(nextOfKin, nextOfKinDTO);
-            BeanUtils.copyProperties(documentation, documentationDTO);
-            BeanUtils.copyProperties(employmentDetails, employmentDetailsDTO);
-            BeanUtils.copyProperties(qualifications, previousQualificationsDTO);
-
-            applicationDTO.setNextOfKin(nextOfKinDTO);
-            applicationDTO.setDocumentation(documentationDTO);
-            applicationDTO.setEmploymentDetails(employmentDetailsDTO);
-            applicationDTO.setPreviousQualifications(previousQualificationsDTO);
-
-        }
-
+        applicationDTO.setNextOfKin(nextOfKinDTO);
+        applicationDTO.setDocumentation(documentationDTO);
+        applicationDTO.setPreviousQualifications(previousQualificationsDTO);
+        applicationDTO.setEmploymentDetails(employmentDetailsDTO);
+        applicationDTO.setPersonalDetails(personalDetailsDTO);
 
         return applicationDTO;
     }
 
     @Override
-    public ApplicationDTO deleteApplication(ApplicationDTO applicationDTO) {
+    public boolean deleteApplication(Long id) {
 
-        Application appToDelete = applicationRepository.findApplicationByIdNumber(applicationDTO.getIdNumber());
+        personalDetailsService.delete(id);
+        documentService.delete(id);
+        employmentDetailsService.delete(id);
+        nextOfKinService.delete(id);
+        previousQualificationsService.delete(id);
 
-        if (appToDelete != null) {
-            applicationRepository.deleteById(appToDelete.getId());
-            documentationRepository.deleteById(applicationDTO.getDocumentation().getOwnerId());
-            employmentDetailsRepository.deleteById(applicationDTO.getEmploymentDetails().getApplicantId());
-            nextOfKinRepository.deleteById(applicationDTO.getNextOfKin().getApplicantId());
-            qualificationsRepository.deleteById(applicationDTO.getPreviousQualifications().getOwnerId());
-            return applicationDTO;
-            // Updated delete
-        }
-
-        return null;
+        return true;
     }
 
     @Override
@@ -145,30 +108,29 @@ public class ApplicationServiceImpl implements ApplicationService {
         DocumentationDTO documentationDTO = applicationDTO.getDocumentation();
         EmploymentDetailsDTO employmentDetailsDTO = applicationDTO.getEmploymentDetails();
         NextOfKinDTO nextOfKinDTO = applicationDTO.getNextOfKin();
+        PersonalDetailsDTO personalDetailsDTO = applicationDTO.getPersonalDetails();
+        PreviousQualificationsDTO previousQualificationsDTO = applicationDTO.getPreviousQualifications();
 
         if (documentationDTO != null) {
-            Documentation documentation = documentationRepository.findByOwnerId(documentationDTO.getOwnerId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Document with given ID not found")
-            );
-            BeanUtils.copyProperties(documentationDTO, documentation);
-            documentation = documentationRepository.save(documentation);
+            documentService.update(documentationDTO);
         }
 
         if (employmentDetailsDTO != null) {
-            EmploymentDetails employmentDetails = employmentDetailsRepository.findByApplicantId(employmentDetailsDTO.getApplicantId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Record with given applicantID not found")
-            );
-            BeanUtils.copyProperties(employmentDetailsDTO, employmentDetails);
-            employmentDetails = employmentDetailsRepository.save(employmentDetails);
+            employmentDetailsService.update(employmentDetailsDTO);
         }
 
         if (nextOfKinDTO != null) {
-            NextOfKin nextOfKin = nextOfKinRepository.findByApplicantId(nextOfKinDTO.getApplicantId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Record with given applicantID not found")
-            );
-            BeanUtils.copyProperties(nextOfKinDTO, nextOfKin);
-             nextOfKinRepository.save(nextOfKin);
+            nextOfKinService.update(nextOfKinDTO);
         }
+
+        if (personalDetailsDTO != null) {
+            personalDetailsService.update(personalDetailsDTO);
+        }
+
+        if (previousQualificationsDTO != null) {
+            previousQualificationsService.update(previousQualificationsDTO);
+        }
+
         return applicationDTO;
     }
 

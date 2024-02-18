@@ -8,10 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import za.co.emmtapp.erpservice.application.model.Application;
 import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.common.ApiResponse;
@@ -25,11 +22,13 @@ import static za.co.emmtapp.erpservice.common.ApiConstants.APP_SUCCESS_MESSAGE;
 @RestController
 @RequestMapping("/application")
 @Slf4j
-@RequiredArgsConstructor
 public class ApplicationAPI implements CrudApi<ApplicationDTO> {
 
-    @Autowired
     private final ApplicationService registrationService;
+
+    public ApplicationAPI(ApplicationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
 
     @Override
@@ -46,8 +45,13 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
 
     @Override
     public ApiResponse<ApplicationDTO> delete(ApplicationDTO applicationDTO) {
-         ApplicationDTO appDTO = registrationService.deleteApplication(applicationDTO);
-         return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, appDTO);
+         return null;
+    }
+
+    @DeleteMapping("deleteApplication/{id}")
+    public ApiResponse<Boolean> delete(@PathVariable Long id) {
+        Boolean result = registrationService.deleteApplication(id);
+        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, result);
     }
 
     @Override

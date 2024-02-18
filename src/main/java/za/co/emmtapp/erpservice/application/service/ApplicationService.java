@@ -10,7 +10,7 @@ public interface ApplicationService {
     ApplicationDTO createRegistration(ApplicationDTO applicationDTO);
     ApplicationDTO find(Long id);
 
-    public ApplicationDTO deleteApplication(ApplicationDTO applicationDTO);
+    public boolean deleteApplication(Long id);
 
     public ApplicationDTO updateApplication(ApplicationDTO applicationDTO);
 

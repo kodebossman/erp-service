@@ -7,17 +7,17 @@ import za.co.emmtapp.erpservice.application.model.CIMALevel;
 @Getter
 @Setter
 public class PreviousQualificationsDTO {
-    Long ownerId;
-    String nameOfInstitution;
-    String highestQualificationObtained;
-    String isCIMARegistered;
-    CIMALevel CimaLevel;
-    String cimaContactId;
-    String cimaEmail;
-    String listOfProfessionalBodies;
-    Long papersLeft;
-    String isMemberOfProfessionalBody;
-    Long packageStudyDuration;
-    String consentFormUrl;
-    String hasConsented;
+    private Long ownerId;
+    private String nameOfInstitution;
+    private String highestQualificationObtained;
+    private String isCIMARegistered;
+    private CIMALevel CimaLevel;
+    private String cimaContactId;
+    private String cimaEmail;
+    private String listOfProfessionalBodies;
+    private Long papersLeft;
+    private String isMemberOfProfessionalBody;
+    private Long packageStudyDuration;
+    private String consentFormUrl;
+    private String hasConsented;
 }
