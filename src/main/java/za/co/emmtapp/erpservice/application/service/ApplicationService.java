@@ -1,7 +1,6 @@
 package za.co.emmtapp.erpservice.application.service;
 
-import org.springframework.data.domain.Pageable;
-import za.co.emmtapp.erpservice.application.model.Application;
+
 import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 

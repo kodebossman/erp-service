@@ -1,13 +1,10 @@
 package za.co.emmtapp.erpservice.application.service;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.*;
@@ -19,29 +16,27 @@ import za.co.emmtapp.erpservice.application.repos.*;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 @Transactional
-
 public class ApplicationServiceImpl implements ApplicationService {
 
-    @Autowired
-    ApplicationRepository applicationRepository;
-    @Autowired
-    DocumentationRepository documentationRepository;
-    @Autowired
-    NextOfKinRepository nextOfKinRepository;
+    private final ApplicationRepository applicationRepository;
+    private final DocumentationRepository documentationRepository;
+    private final NextOfKinRepository nextOfKinRepository;
+    private final EmploymentDetailsRepository employmentDetailsRepository;
+    private final PreviousQualificationsRepository qualificationsRepository;
 
-    @Autowired
-    EmploymentDetailsRepository employmentDetailsRepository;
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository, DocumentationRepository documentationRepository, NextOfKinRepository nextOfKinRepository, EmploymentDetailsRepository employmentDetailsRepository, PreviousQualificationsRepository qualificationsRepository) {
+        this.applicationRepository = applicationRepository;
+        this.documentationRepository = documentationRepository;
+        this.nextOfKinRepository = nextOfKinRepository;
+        this.employmentDetailsRepository = employmentDetailsRepository;
+        this.qualificationsRepository = qualificationsRepository;
+    }
 
-    @Autowired
-    PreviousQualificationsRepository qualificationsRepository;
 
     @Override
     public ApplicationDTO createRegistration(ApplicationDTO applicationDTO) {
