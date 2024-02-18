@@ -133,6 +133,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             nextOfKinRepository.deleteById(applicationDTO.getNextOfKin().getApplicantId());
             qualificationsRepository.deleteById(applicationDTO.getPreviousQualifications().getOwnerId());
             return applicationDTO;
+            // Updated delete
         }
 
         return null;
