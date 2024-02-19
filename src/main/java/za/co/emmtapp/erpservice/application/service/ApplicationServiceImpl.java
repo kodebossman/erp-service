@@ -21,7 +21,6 @@ import java.util.List;
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
-    private final DocumentationRepository documentationRepository;
 
     private final DocumentService documentService;
     private  final NextOfKinService nextOfKinService;
@@ -30,21 +29,20 @@ public class ApplicationServiceImpl implements ApplicationService {
     private  final EmploymentDetailsService employmentDetailsService;
 
     private final PreviousQualificationsService previousQualificationsService;
-    private final NextOfKinRepository nextOfKinRepository;
-    private final EmploymentDetailsRepository employmentDetailsRepository;
-    private final PreviousQualificationsRepository qualificationsRepository;
 
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository, DocumentationRepository documentationRepository, DocumentService documentService, NextOfKinService nextOfKinService, PersonalDetailsService personalDetailsService, EmploymentDetailsService employmentDetailsService, PreviousQualificationsService previousQualificationsService, NextOfKinRepository nextOfKinRepository, EmploymentDetailsRepository employmentDetailsRepository, PreviousQualificationsRepository qualificationsRepository) {
+
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository,
+                                  DocumentService documentService,
+                                  NextOfKinService nextOfKinService,
+                                  PersonalDetailsService personalDetailsService,
+                                  EmploymentDetailsService employmentDetailsService,
+                                  PreviousQualificationsService previousQualificationsService) {
         this.applicationRepository = applicationRepository;
-        this.documentationRepository = documentationRepository;
         this.documentService = documentService;
         this.nextOfKinService = nextOfKinService;
         this.personalDetailsService = personalDetailsService;
         this.employmentDetailsService = employmentDetailsService;
         this.previousQualificationsService = previousQualificationsService;
-        this.nextOfKinRepository = nextOfKinRepository;
-        this.employmentDetailsRepository = employmentDetailsRepository;
-        this.qualificationsRepository = qualificationsRepository;
     }
 
 
