@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
-import za.co.emmtapp.erpservice.application.model.dto.EmploymentDetailsDTO;
-import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
 import za.co.emmtapp.erpservice.common.BaseEntity;
 
 @Entity
@@ -65,5 +62,11 @@ public class Application extends BaseEntity {
 
     @Column(name = "application_date")
     private String applicationDate;
+
+    @Column(name = "status")
+    private String applicationStatus;
+
+    @Column(name = "fee")
+    private String applicationFee;
 
 }

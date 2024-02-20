@@ -34,7 +34,7 @@ public class PersonalDetailsServiceImpl implements  PersonalDetailsService {
 
         if (personalDetailsDTO != null) {
             PersonalDetails personalDetails = personalDetailsRepository.findById(personalDetailsDTO.getOwnerId()).orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
+                    () -> new ResourceNotFoundException("Application with provided Id not found")
             );
 
             BeanUtils.copyProperties(personalDetailsDTO, personalDetails);

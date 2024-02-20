@@ -16,8 +16,7 @@ import za.co.emmtapp.erpservice.common.CrudApi;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.application.service.ApplicationService;
 
-import static za.co.emmtapp.erpservice.common.ApiConstants.APP_RETRIEVE_SUCCESS;
-import static za.co.emmtapp.erpservice.common.ApiConstants.APP_SUCCESS_MESSAGE;
+import static za.co.emmtapp.erpservice.common.ApiConstants.*;
 
 @RestController
 @RequestMapping("/application")
@@ -40,7 +39,7 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
     @Override
     public ApiResponse<ApplicationDTO> update(ApplicationDTO applicationDTO) {
         ApplicationDTO app = registrationService.updateApplication(applicationDTO);
-        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, app);
+        return new ApiResponse<>(UPDATE_SUCCESS, APP_SUCCESS_MESSAGE, app);
     }
 
     @Override
@@ -54,10 +53,12 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
         return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, result);
     }
 
+
+    @DeleteMapping("applications/all")
     @Override
     public ApiResponse<PaginationResult<ApplicationDTO>> findAll(String search, Integer page, Integer size, String sortBy) {
         var res = registrationService.findAll(search, page, size, sortBy);
-        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, res);
+        return new ApiResponse<>(HttpStatus.ACCEPTED.value(),  APP_SUCCESS_MESSAGE, res);
     }
 
     @Override

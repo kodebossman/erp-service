@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import za.co.emmtapp.erpservice.application.model.PersonalDetails;
-import za.co.emmtapp.erpservice.application.model.PreviousQualifications;
-import za.co.emmtapp.erpservice.common.BaseDto;
 
 @Getter
 @Setter
@@ -19,5 +16,8 @@ public class ApplicationDTO {
     private DocumentationDTO documentation;
     private EmploymentDetailsDTO employmentDetails;
     private PreviousQualificationsDTO previousQualifications;
+    private String applicationStatus;
+    private String applicationType;
+    private String applicationFee;
 
 }
