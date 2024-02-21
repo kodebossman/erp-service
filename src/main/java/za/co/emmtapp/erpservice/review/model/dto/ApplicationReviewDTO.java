@@ -1,14 +1,13 @@
 package za.co.emmtapp.erpservice.review.model.dto;
 
 import lombok.Data;
-import za.co.emmtapp.erpservice.common.BaseDto;
 import za.co.emmtapp.erpservice.review.model.ApplicationReviewStatus;
 
 @Data
-public class ApplicationReviewDTO extends BaseDto {
+public class ApplicationReviewDTO {
     private String reviewStatus;
     private ApplicationReviewStatus status;
     private String comments;
     private String description;
-    private Long  applicationId;
+    private String  applicationId;
 }

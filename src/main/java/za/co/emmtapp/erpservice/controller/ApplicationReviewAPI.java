@@ -11,6 +11,7 @@ import za.co.emmtapp.erpservice.review.model.ApplicationReview;
 import za.co.emmtapp.erpservice.review.model.dto.ApplicationReviewDTO;
 import za.co.emmtapp.erpservice.review.service.ApplicationReviewService;
 
+import static za.co.emmtapp.erpservice.common.ApiConstants.APP_REVIEW_SUCCESS_MESSAGE;
 import static za.co.emmtapp.erpservice.common.ApiConstants.APP_SUCCESS_MESSAGE;
 
 @RestController
@@ -28,7 +29,7 @@ public class ApplicationReviewAPI implements CrudApi<ApplicationReviewDTO> {
     @Override
     public ApiResponse<ApplicationReviewDTO> create(ApplicationReviewDTO applicationReviewDTO) {
         ApplicationReviewDTO reviewedApplication = applicationReviewService.createApplicationReview(applicationReviewDTO);
-        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, reviewedApplication);
+        return new ApiResponse<>(HttpStatus.OK.value(), APP_REVIEW_SUCCESS_MESSAGE, reviewedApplication);
     }
 
     @Override

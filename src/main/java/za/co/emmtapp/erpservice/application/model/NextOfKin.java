@@ -52,7 +52,7 @@ public class NextOfKin extends BaseEntity {
     @Column(name = "phone", nullable = false, length = 12) // unique = true,
     private String mobileNumber;
 
-    @Column(name = "email_address", nullable = false, length = 12) //  unique = true,
+    @Column(name = "email_address", nullable = false, length = 45) //  unique = true,
     private String emailAddress;
 
     @Column(name = "nationality")

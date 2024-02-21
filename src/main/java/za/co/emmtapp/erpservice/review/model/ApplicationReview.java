@@ -16,7 +16,7 @@ import za.co.emmtapp.erpservice.common.BaseEntity;
 public class ApplicationReview extends BaseEntity {
 
     @Column(name = "application_id", nullable = false, length = 45)
-    private Long  applicationId;
+    private String  applicationId;
 
     @Column(name = "review_status", nullable = false, length = 45)
     private String reviewStatus;
