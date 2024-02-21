@@ -1,10 +1,17 @@
 package za.co.emmtapp.erpservice.review.service;
 
+import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import za.co.emmtapp.erpservice.review.model.ApplicationReview;
 import za.co.emmtapp.erpservice.review.model.dto.ApplicationReviewDTO;
+import za.co.emmtapp.erpservice.review.repository.ApplicationReviewRepository;
 
 @Service
-public class ApplicationReviewServiceImpl implements ApplicationReviewService{
+@AllArgsConstructor
+public class ApplicationReviewServiceImpl implements ApplicationReviewService {
+
+    private final ApplicationReviewRepository applicationReviewRepository;
     @Override
     public ApplicationReviewDTO createApplicationReview(ApplicationReviewDTO applicationReviewDTO) {
 
@@ -20,8 +27,15 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService{
 
         }
 
-        //SAve this infomation in DB
+        ApplicationReview applicationReview = new ApplicationReview();
+        BeanUtils.copyProperties(applicationReviewDTO, applicationReview);
 
-        return null;
+        // Save this information in DB
+
+        applicationReviewRepository.save(applicationReview);
+
+        BeanUtils.copyProperties(applicationReview, applicationReviewDTO);
+
+        return applicationReviewDTO;
     }
 }

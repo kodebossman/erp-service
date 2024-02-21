@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import za.co.emmtapp.erpservice.application.model.Application;
 import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.common.ApiResponse;
 import za.co.emmtapp.erpservice.common.CrudApi;
