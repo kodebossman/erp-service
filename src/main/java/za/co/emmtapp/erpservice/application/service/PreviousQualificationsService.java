@@ -9,6 +9,7 @@ public interface PreviousQualificationsService {
     public PreviousQualificationsDTO create(PreviousQualificationsDTO previousQualificationsDTO);
 
     public boolean update(PreviousQualificationsDTO previousQualificationsDTO);
-    PreviousQualificationsDTO find(Long id);
-    public boolean delete(Long id);
+    PreviousQualificationsDTO find(String id);
+    boolean delete(String id);
+
 }

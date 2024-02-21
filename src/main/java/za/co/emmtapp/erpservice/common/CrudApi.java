@@ -26,6 +26,6 @@ public interface CrudApi<T> {
 
   @GetMapping("/{id}")
   @CrossOrigin(origins = "*", allowedHeaders = "*")
-  ApiResponse<T> find(@PathVariable Long id);
+  ApiResponse<T> find(@PathVariable String id);
 
 }

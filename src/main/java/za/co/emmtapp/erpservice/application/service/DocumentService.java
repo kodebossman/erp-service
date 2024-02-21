@@ -6,10 +6,10 @@ import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 public interface DocumentService {
     public DocumentationDTO create(DocumentationDTO documentation);
 
-    DocumentationDTO find(Long id);
+    DocumentationDTO find(String id);
 
     public boolean update(DocumentationDTO documentationDTO);
 
-    public boolean delete(Long id);
+    public boolean delete(String id);
 
 }

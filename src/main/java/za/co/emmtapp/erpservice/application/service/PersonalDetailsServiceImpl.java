@@ -2,14 +2,13 @@ package za.co.emmtapp.erpservice.application.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import za.co.emmtapp.erpservice.application.model.Documentation;
-import za.co.emmtapp.erpservice.application.model.NextOfKin;
 import za.co.emmtapp.erpservice.application.model.PersonalDetails;
-import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
-import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
 import za.co.emmtapp.erpservice.application.model.dto.PersonalDetailsDTO;
 import za.co.emmtapp.erpservice.application.repos.PersonalDetailsRepository;
-import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ApplicationAlreadyExistsException;
+import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
+
+import java.util.Optional;
 
 @Service
 public class PersonalDetailsServiceImpl implements  PersonalDetailsService {
@@ -24,6 +23,10 @@ public class PersonalDetailsServiceImpl implements  PersonalDetailsService {
     public PersonalDetailsDTO create(PersonalDetailsDTO personalDetailsDTO) {
         PersonalDetails personalDetails = new PersonalDetails();
         BeanUtils.copyProperties(personalDetailsDTO, personalDetails);
+        Optional<PersonalDetails> optionalPersonalDetails = personalDetailsRepository.findByIdNumber(personalDetailsDTO.getIdNumber());
+        if (optionalPersonalDetails.isPresent()) {
+            throw new ApplicationAlreadyExistsException("Application already registered with given id " + personalDetailsDTO.getIdNumber());
+        }
         personalDetailsRepository.save(personalDetails);
         return personalDetailsDTO;
     }
@@ -33,8 +36,8 @@ public class PersonalDetailsServiceImpl implements  PersonalDetailsService {
         boolean isUpdated = false;
 
         if (personalDetailsDTO != null) {
-            PersonalDetails personalDetails = personalDetailsRepository.findById(personalDetailsDTO.getOwnerId()).orElseThrow(
-                    () -> new ResourceNotFoundException("Application with provided Id not found")
+            PersonalDetails personalDetails = personalDetailsRepository.findByIdNumber(personalDetailsDTO.getIdNumber()).orElseThrow(
+                    () -> new ApplicationNotFoundException("Application with provided Id " + personalDetailsDTO.getIdNumber()  + " not found " )
             );
 
             BeanUtils.copyProperties(personalDetailsDTO, personalDetails);
@@ -46,18 +49,18 @@ public class PersonalDetailsServiceImpl implements  PersonalDetailsService {
     }
 
     @Override
-    public PersonalDetailsDTO find(Long id) {
+    public PersonalDetailsDTO find(String idNumber) {
         PersonalDetailsDTO personalDetailsDTO = new PersonalDetailsDTO();
-        PersonalDetails personalDetails =  personalDetailsRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("application with provided Id not found")
+        PersonalDetails personalDetails =  personalDetailsRepository.findByIdNumber(idNumber).orElseThrow(
+                () -> new ApplicationNotFoundException("Application with provided Id not found " + idNumber)
         );
         BeanUtils.copyProperties(personalDetails, personalDetailsDTO);
         return personalDetailsDTO;
     }
 
     @Override
-    public boolean delete(Long id) {
-        personalDetailsRepository.deleteById(id);
+    public boolean delete(String id) {
+        personalDetailsRepository.deleteByIdNumber(id);
         return true;
     }
 }

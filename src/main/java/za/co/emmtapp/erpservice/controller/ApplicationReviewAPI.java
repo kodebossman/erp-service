@@ -47,7 +47,7 @@ public class ApplicationReviewAPI implements CrudApi<ApplicationReviewDTO> {
     }
 
     @Override
-    public ApiResponse<ApplicationReviewDTO> find(Long id) {
+    public ApiResponse<ApplicationReviewDTO> find(String id) {
         return null;
     }
 }

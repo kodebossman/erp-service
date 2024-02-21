@@ -6,8 +6,9 @@ import za.co.emmtapp.erpservice.application.model.dto.EmploymentDetailsDTO;
 
 public interface EmploymentDetailsService {
     public EmploymentDetailsDTO create(EmploymentDetailsDTO employmentDetailsDTO);
-    EmploymentDetailsDTO find(Long id);
+    EmploymentDetailsDTO find(String id);
 
     public boolean update(EmploymentDetailsDTO employmentDetailsDTO);
-    public boolean delete(Long id);
+    public boolean delete(String id);
+
 }

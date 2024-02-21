@@ -3,14 +3,10 @@ package za.co.emmtapp.erpservice.application.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import za.co.emmtapp.erpservice.application.model.Documentation;
-import za.co.emmtapp.erpservice.application.model.EmploymentDetails;
 import za.co.emmtapp.erpservice.application.model.NextOfKin;
-import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
-import za.co.emmtapp.erpservice.application.model.dto.EmploymentDetailsDTO;
 import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
 import za.co.emmtapp.erpservice.application.repos.NextOfKinRepository;
-import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
 
 @Service
 @Transactional
@@ -34,8 +30,8 @@ public class NextOfKinServiceImpl implements NextOfKinService {
         boolean isUpdated = false;
 
         if (nextOfKinDTO != null) {
-            NextOfKin nextOfKin = nextOfKinRepository.findById(nextOfKinDTO.getApplicantId()).orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
+            NextOfKin nextOfKin = nextOfKinRepository.findByApplicantId(nextOfKinDTO.getApplicantId()).orElseThrow(
+                    () -> new ApplicationNotFoundException("application with provided Id not found")
             );
 
             BeanUtils.copyProperties(nextOfKinDTO, nextOfKin);
@@ -47,18 +43,18 @@ public class NextOfKinServiceImpl implements NextOfKinService {
     }
 
     @Override
-    public NextOfKinDTO find(Long id) {
+    public NextOfKinDTO find(String applicantId) {
         NextOfKinDTO nextOfKinDTO = new NextOfKinDTO();
-        NextOfKin nextOfKin =  nextOfKinRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("application with provided Id not found")
+        NextOfKin nextOfKin =  nextOfKinRepository.findByApplicantId(applicantId).orElseThrow(
+                () -> new ApplicationNotFoundException("Application with provided Id not found")
         );
         BeanUtils.copyProperties(nextOfKin, nextOfKinDTO);
         return nextOfKinDTO;
     }
 
     @Override
-    public boolean delete(Long id) {
-        nextOfKinRepository.deleteById(id);
+    public boolean delete(String id) {
+        nextOfKinRepository.deleteByApplicantId(id);
         return true;
     }
 

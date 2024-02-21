@@ -45,10 +45,10 @@ public class Application extends BaseEntity {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "phone", unique = true, nullable = false, length = 12)
+    @Column(name = "phone", unique = true, nullable = false, length = 10)
     private String mobileNumber;
 
-    @Column(name = "email_address", unique = true, nullable = false, length = 12)
+    @Column(name = "email_address", unique = true, nullable = false, length = 45)
     private String emailAddress;
 
     @Column(name = "nationality")

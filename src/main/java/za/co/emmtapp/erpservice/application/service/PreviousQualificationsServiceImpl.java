@@ -3,14 +3,10 @@ package za.co.emmtapp.erpservice.application.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import za.co.emmtapp.erpservice.application.model.NextOfKin;
-import za.co.emmtapp.erpservice.application.model.PersonalDetails;
 import za.co.emmtapp.erpservice.application.model.PreviousQualifications;
-import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
-import za.co.emmtapp.erpservice.application.model.dto.PersonalDetailsDTO;
 import za.co.emmtapp.erpservice.application.model.dto.PreviousQualificationsDTO;
 import za.co.emmtapp.erpservice.application.repos.PreviousQualificationsRepository;
-import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
 
 @Service
 @Transactional
@@ -35,9 +31,9 @@ public class PreviousQualificationsServiceImpl implements  PreviousQualification
 
         if (previousQualificationsDTO != null) {
             PreviousQualifications previousQualifications = previousQualificationsRepository
-                    .findById(previousQualificationsDTO.getOwnerId())
+                    .findByOwnerId(previousQualificationsDTO.getOwnerId())
                     .orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
+                    () -> new ApplicationNotFoundException("application with provided Id not found")
             );
 
             BeanUtils.copyProperties(previousQualificationsDTO, previousQualifications);
@@ -49,18 +45,18 @@ public class PreviousQualificationsServiceImpl implements  PreviousQualification
     }
 
     @Override
-    public PreviousQualificationsDTO find(Long id) {
+    public PreviousQualificationsDTO find(String id) {
         PreviousQualificationsDTO previousQualificationsDTO = new PreviousQualificationsDTO();
-        PreviousQualifications previousQualifications =  previousQualificationsRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("application with provided Id not found")
+        PreviousQualifications previousQualifications =  previousQualificationsRepository.findByOwnerId(id).orElseThrow(
+                () -> new ApplicationNotFoundException("application with provided Id not found")
         );
         BeanUtils.copyProperties(previousQualifications, previousQualificationsDTO);
         return previousQualificationsDTO;
     }
 
     @Override
-    public boolean delete(Long id) {
-        previousQualificationsRepository.deleteById(id);
+    public boolean delete(String id) {
+        previousQualificationsRepository.deleteByOwnerId(id);
         return true;
     }
 }

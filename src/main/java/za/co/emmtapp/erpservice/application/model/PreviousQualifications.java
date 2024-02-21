@@ -17,7 +17,7 @@ import za.co.emmtapp.erpservice.common.BaseEntity;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PreviousQualifications extends BaseEntity {
     @Column(name = "owner_id")
-    Long ownerId;
+    String ownerId;
 
     @Column(name = "institution_name")
     String nameOfInstitution;

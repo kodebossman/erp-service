@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmploymentDetailsDTO {
-    private Long applicantId;
+    private String applicantId;
     private String nameOfEmployer;
     private String position;
     private String address;

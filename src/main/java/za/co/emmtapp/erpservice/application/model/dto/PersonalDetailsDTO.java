@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonalDetailsDTO {
-    private Long ownerId;
     private String title;
     private String firstName;
     private String lastName;

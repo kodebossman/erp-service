@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DocumentationDTO {
-    private Long ownerId;
+    private String ownerId;
     private String documentName;
     private String documentURL;
     private String documentType;

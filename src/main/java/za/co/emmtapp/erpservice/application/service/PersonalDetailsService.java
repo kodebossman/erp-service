@@ -7,9 +7,10 @@ import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
 import za.co.emmtapp.erpservice.application.model.dto.PersonalDetailsDTO;
 
 public interface PersonalDetailsService {
-    public PersonalDetailsDTO create(PersonalDetailsDTO personalDetailsDTO);
-    public boolean update(PersonalDetailsDTO personalDetailsDTO);
-    PersonalDetailsDTO find(Long id);
+    PersonalDetailsDTO create(PersonalDetailsDTO personalDetailsDTO);
+    boolean update(PersonalDetailsDTO personalDetailsDTO);
+    PersonalDetailsDTO find(String idNumber);
 
-    public boolean delete(Long id);
+    boolean delete(String id);
+
 }

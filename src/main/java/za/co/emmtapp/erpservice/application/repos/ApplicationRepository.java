@@ -7,6 +7,6 @@ import za.co.emmtapp.erpservice.application.model.Application;
 
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application,Long> {
-    public void deleteByIdNumber(String idNumber);
-    public Application findApplicationByIdNumber(String idNumber);
+    void deleteByIdNumber(String idNumber);
+    Application findApplicationByIdNumber(String idNumber);
 }

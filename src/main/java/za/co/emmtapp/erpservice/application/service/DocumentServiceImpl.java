@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.Documentation;
 import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 import za.co.emmtapp.erpservice.application.repos.DocumentationRepository;
-import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
 
 @Service
 @Transactional
@@ -27,10 +27,10 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public DocumentationDTO find(Long id) {
+    public DocumentationDTO find(String id) {
         DocumentationDTO documentationDTO = new DocumentationDTO();
-        Documentation documentation =  documentationRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("application with provided Id not found")
+        Documentation documentation =  documentationRepository.findByOwnerId(id).orElseThrow(
+                () -> new ApplicationNotFoundException("application with provided Id not found")
         );
         BeanUtils.copyProperties(documentation, documentationDTO);
         return documentationDTO;
@@ -41,8 +41,8 @@ public class DocumentServiceImpl implements DocumentService {
         boolean isUpdated = false;
 
         if (documentationDTO != null) {
-            Documentation documentation = documentationRepository.findById(documentationDTO.getOwnerId()).orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
+            Documentation documentation = documentationRepository.findByOwnerId(documentationDTO.getOwnerId()).orElseThrow(
+                    () -> new ApplicationNotFoundException("application with provided Id not found")
             );
 
             BeanUtils.copyProperties(documentationDTO, documentation);
@@ -54,8 +54,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public boolean delete(Long id) {
-        documentationRepository.deleteById(id);
+    public boolean delete(String id) {
+        documentationRepository.deleteByOwnerId(id);
         return true;
     }
 

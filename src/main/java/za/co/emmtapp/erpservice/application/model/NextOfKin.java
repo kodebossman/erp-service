@@ -17,7 +17,7 @@ import za.co.emmtapp.erpservice.common.BaseEntity;
 public class NextOfKin extends BaseEntity {
 
     @Column(name = "applicant_id")
-    private Long applicantId;
+    private String applicantId;
 
     @Column(name = "title", nullable = false, length = 45)
     private String title;
@@ -31,7 +31,7 @@ public class NextOfKin extends BaseEntity {
     @Column(name = "preferred_name", nullable = false, length = 45)
     private String preferredName;
 
-    @Column(name = "id_number", unique = true, nullable = false, length = 10)
+    @Column(name = "id_number", nullable = false, length = 10) //, unique = true,
     private String idNumber;
 
     @Column(name = "address")
@@ -49,10 +49,10 @@ public class NextOfKin extends BaseEntity {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "phone", unique = true, nullable = false, length = 12)
+    @Column(name = "phone", nullable = false, length = 12) // unique = true,
     private String mobileNumber;
 
-    @Column(name = "email_address", unique = true, nullable = false, length = 12)
+    @Column(name = "email_address", nullable = false, length = 12) //  unique = true,
     private String emailAddress;
 
     @Column(name = "nationality")

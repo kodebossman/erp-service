@@ -6,5 +6,8 @@ import za.co.emmtapp.erpservice.application.model.EmploymentDetails;
 import java.util.Optional;
 
 public interface EmploymentDetailsRepository extends JpaRepository<EmploymentDetails, Long> {
-    Optional<EmploymentDetails> findByApplicantId(Long id);
+
+    Optional<EmploymentDetails> findByApplicantId(String applicantId);
+
+    void deleteByApplicantId(String id);
 }

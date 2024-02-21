@@ -47,7 +47,7 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
     }
 
     @DeleteMapping("deleteApplication/{id}")
-    public ApiResponse<Boolean> delete(@PathVariable Long id) {
+    public ApiResponse<Boolean> delete(@PathVariable String id) {
         Boolean result = registrationService.deleteApplication(id);
         return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, result);
     }
@@ -61,7 +61,7 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
     }
 
     @Override
-    public ApiResponse<ApplicationDTO> find(Long id) {
+    public ApiResponse<ApplicationDTO> find(String id) {
         var application = registrationService.find(id);
         return new ApiResponse<>(HttpStatus.OK.value(), APP_RETRIEVE_SUCCESS, application);
     }

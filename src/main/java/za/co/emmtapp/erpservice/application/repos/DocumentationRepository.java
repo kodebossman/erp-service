@@ -7,5 +7,7 @@ import za.co.emmtapp.erpservice.application.model.Documentation;
 import java.util.Optional;
 
 public interface DocumentationRepository extends JpaRepository<Documentation, Long> {
-    Optional<Documentation> findByOwnerId(Long ownerId);
+    Optional<Documentation> findByOwnerId(String ownerId);
+
+    void deleteByOwnerId(String id);
 }

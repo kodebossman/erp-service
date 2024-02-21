@@ -8,9 +8,9 @@ import za.co.emmtapp.erpservice.common.PaginationResult;
 
 public interface ApplicationService {
     ApplicationDTO createRegistration(ApplicationDTO applicationDTO);
-    ApplicationDTO find(Long id);
+    ApplicationDTO find(String id);
 
-    public boolean deleteApplication(Long id);
+    public boolean deleteApplication(String id);
 
     public ApplicationDTO updateApplication(ApplicationDTO applicationDTO);
 

@@ -3,12 +3,10 @@ package za.co.emmtapp.erpservice.application.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import za.co.emmtapp.erpservice.application.model.Documentation;
 import za.co.emmtapp.erpservice.application.model.EmploymentDetails;
-import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 import za.co.emmtapp.erpservice.application.model.dto.EmploymentDetailsDTO;
 import za.co.emmtapp.erpservice.application.repos.EmploymentDetailsRepository;
-import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
 
 @Service
 @Transactional
@@ -27,10 +25,10 @@ public class EmploymentDetailsImpl implements EmploymentDetailsService {
     }
 
     @Override
-    public EmploymentDetailsDTO find(Long id) {
+    public EmploymentDetailsDTO find(String applicantId) {
         EmploymentDetailsDTO employmentDetailsDTO = new EmploymentDetailsDTO();
-        EmploymentDetails employmentDetails =  employmentDetailsRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("application with provided Id not found")
+        EmploymentDetails employmentDetails =  employmentDetailsRepository.findByApplicantId(applicantId).orElseThrow(
+                () -> new ApplicationNotFoundException("application with provided Id not found")
         );
         BeanUtils.copyProperties(employmentDetails, employmentDetailsDTO);
         return employmentDetailsDTO;
@@ -41,8 +39,8 @@ public class EmploymentDetailsImpl implements EmploymentDetailsService {
         boolean isUpdated = false;
 
         if (employmentDetailsDTO != null) {
-            EmploymentDetails employmentDetails = employmentDetailsRepository.findById(employmentDetailsDTO.getApplicantId()).orElseThrow(
-                    () -> new ResourceNotFoundException("application with provided Id not found")
+            EmploymentDetails employmentDetails = employmentDetailsRepository.findByApplicantId(employmentDetailsDTO.getApplicantId()).orElseThrow(
+                    () -> new ApplicationNotFoundException("application with provided Id not found")
             );
 
             BeanUtils.copyProperties(employmentDetailsDTO, employmentDetails);
@@ -54,8 +52,8 @@ public class EmploymentDetailsImpl implements EmploymentDetailsService {
     }
 
     @Override
-    public boolean delete(Long id) {
-        employmentDetailsRepository.deleteById(id);
+    public boolean delete(String id) {
+        employmentDetailsRepository.deleteByApplicantId(id);
         return true;
     }
 }

@@ -16,7 +16,7 @@ import za.co.emmtapp.erpservice.common.BaseEntity;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Documentation extends BaseEntity {
     @Column(name = "owner_id")
-    private Long ownerId;
+    private String ownerId;
     @Column(name = "document_name")
     private String documentName;
     @Column(name = "document_url")

@@ -18,10 +18,6 @@ import za.co.emmtapp.erpservice.common.BaseEntity;
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PersonalDetails extends BaseEntity {
-
-    @Column(name = "owner_id", nullable = false, length = 45)
-    private Long ownerId;
-
     @Column(name = "title", nullable = false, length = 45)
     private String title;
 
@@ -52,10 +48,10 @@ public class PersonalDetails extends BaseEntity {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "phone", unique = true, nullable = false, length = 12)
+    @Column(name = "phone", nullable = false, length = 12) // unique = true,
     private String mobileNumber;
 
-    @Column(name = "email_address", unique = true, nullable = false, length = 12)
+    @Column(name = "email_address",  nullable = false, length = 12) // unique = true,
     private String emailAddress;
 
     @Column(name = "nationality")

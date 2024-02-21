@@ -16,7 +16,7 @@ import za.co.emmtapp.erpservice.common.BaseEntity;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class EmploymentDetails extends BaseEntity {
     @Column(name = "applicant_id")
-    private Long applicantId;
+    private String applicantId;
     @Column(name = "name_of_employer")
     private String nameOfEmployer;
     @Column(name = "position")
