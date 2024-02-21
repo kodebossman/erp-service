@@ -8,8 +8,8 @@ public interface DocumentService {
 
     DocumentationDTO find(String id);
 
-    public boolean update(DocumentationDTO documentationDTO);
+    boolean update(DocumentationDTO documentationDTO);
 
-    public boolean delete(String id);
+    boolean delete(String id);
 
 }

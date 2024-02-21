@@ -6,9 +6,9 @@ import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
 
 public interface NextOfKinService {
     public NextOfKinDTO create(NextOfKinDTO nextOfKinDTO);
-    public boolean update(NextOfKinDTO nextOfKinDTO);
+    boolean update(NextOfKinDTO nextOfKinDTO);
     NextOfKinDTO find(String id);
 
-    public boolean delete(String id);
+    boolean delete(String id);
 
 }

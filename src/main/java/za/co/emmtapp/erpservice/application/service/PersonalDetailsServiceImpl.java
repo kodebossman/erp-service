@@ -59,8 +59,12 @@ public class PersonalDetailsServiceImpl implements  PersonalDetailsService {
     }
 
     @Override
-    public boolean delete(String id) {
-        personalDetailsRepository.deleteByIdNumber(id);
+    public boolean delete(String idNumber) {
+        PersonalDetails personalDetails =
+        personalDetailsRepository.findByIdNumber(idNumber).orElseThrow(
+                () -> new ApplicationNotFoundException("Application with idNumber " + idNumber + " does not exist")
+        );
+        personalDetailsRepository.deleteByIdNumber(personalDetails.getIdNumber());
         return true;
     }
 }

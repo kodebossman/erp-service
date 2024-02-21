@@ -10,9 +10,9 @@ public interface ApplicationService {
     ApplicationDTO createRegistration(ApplicationDTO applicationDTO);
     ApplicationDTO find(String id);
 
-    public boolean deleteApplication(String id);
+    boolean delete(String id);
 
-    public ApplicationDTO updateApplication(ApplicationDTO applicationDTO);
+    ApplicationDTO update(ApplicationDTO applicationDTO);
 
-    public PaginationResult<ApplicationDTO> findAll(String search, Integer page, Integer size, String sortBy);
+    PaginationResult<ApplicationDTO> findAll(String search, Integer page, Integer size, String sortBy);
 }

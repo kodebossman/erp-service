@@ -37,7 +37,7 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
 
     @Override
     public ApiResponse<ApplicationDTO> update(ApplicationDTO applicationDTO) {
-        ApplicationDTO app = registrationService.updateApplication(applicationDTO);
+        ApplicationDTO app = registrationService.update(applicationDTO);
         return new ApiResponse<>(UPDATE_SUCCESS, APP_SUCCESS_MESSAGE, app);
     }
 
@@ -48,8 +48,13 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
 
     @DeleteMapping("deleteApplication/{id}")
     public ApiResponse<Boolean> delete(@PathVariable String id) {
-        Boolean result = registrationService.deleteApplication(id);
-        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, result);
+        Boolean isDeleted = registrationService.delete(id);
+        if (isDeleted) {
+            return new ApiResponse<>(HttpStatus.OK.value(), APP_DELETE_MESSAGE_SUCCESS, isDeleted);
+        } else {
+            return new ApiResponse<>(HttpStatus.EXPECTATION_FAILED.value(), APP_DELETE_MESSAGE, isDeleted);
+        }
+
     }
 
 

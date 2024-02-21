@@ -95,7 +95,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public boolean deleteApplication(String idNumber) {
+    public boolean delete(String idNumber) {
+        boolean isDeleted = false;
 
         personalDetailsService.delete(idNumber);
         documentService.delete(idNumber);
@@ -103,11 +104,13 @@ public class ApplicationServiceImpl implements ApplicationService {
         nextOfKinService.delete(idNumber);
         previousQualificationsService.delete(idNumber);
 
-        return true;
+        isDeleted = true;
+
+        return isDeleted;
     }
 
     @Override
-    public ApplicationDTO updateApplication(ApplicationDTO applicationDTO) {
+    public ApplicationDTO update(ApplicationDTO applicationDTO) {
 
         applicationDTO.getDocumentation().setOwnerId(applicationDTO.getPersonalDetails().getIdNumber());
         applicationDTO.getEmploymentDetails().setApplicantId(applicationDTO.getPersonalDetails().getIdNumber());

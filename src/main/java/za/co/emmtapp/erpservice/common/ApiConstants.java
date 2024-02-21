@@ -11,6 +11,10 @@ public interface ApiConstants {
   String GOOGLE_MAPS_API_KEY="";
 
   String APP_SUCCESS_MESSAGE = "Application Created Successfully";
+  String APP_DELETE_MESSAGE = "Application Deletion Failed";
+
+  String APP_DELETE_MESSAGE_SUCCESS= "Record Deleted Successfully";
+
   String APP_UPDATE_MESSAGE = "Updated Successfully";
   String APP_RETRIEVE_SUCCESS = "OK";
   int UPDATE_SUCCESS=204;

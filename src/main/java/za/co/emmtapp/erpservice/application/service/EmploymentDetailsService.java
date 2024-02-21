@@ -8,7 +8,7 @@ public interface EmploymentDetailsService {
     public EmploymentDetailsDTO create(EmploymentDetailsDTO employmentDetailsDTO);
     EmploymentDetailsDTO find(String id);
 
-    public boolean update(EmploymentDetailsDTO employmentDetailsDTO);
-    public boolean delete(String id);
+    boolean update(EmploymentDetailsDTO employmentDetailsDTO);
+    boolean delete(String id);
 
 }
