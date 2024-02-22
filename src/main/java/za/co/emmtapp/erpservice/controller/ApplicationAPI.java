@@ -53,7 +53,6 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
     }
 
 
-    @DeleteMapping("applications/all")
     @Override
     public ApiResponse<PaginationResult<ApplicationDTO>> findAll(String search, Integer page, Integer size, String sortBy) {
         var res = registrationService.findAll(search, page, size, sortBy);
@@ -65,7 +64,4 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
         var application = registrationService.find(id);
         return new ApiResponse<>(HttpStatus.OK.value(), APP_RETRIEVE_SUCCESS, application);
     }
-
-
-
 }

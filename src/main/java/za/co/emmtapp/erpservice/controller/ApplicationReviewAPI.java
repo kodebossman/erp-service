@@ -2,8 +2,10 @@ package za.co.emmtapp.erpservice.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.common.ApiResponse;
 import za.co.emmtapp.erpservice.common.CrudApi;
 import za.co.emmtapp.erpservice.common.PaginationResult;
@@ -11,8 +13,7 @@ import za.co.emmtapp.erpservice.review.model.ApplicationReview;
 import za.co.emmtapp.erpservice.review.model.dto.ApplicationReviewDTO;
 import za.co.emmtapp.erpservice.review.service.ApplicationReviewService;
 
-import static za.co.emmtapp.erpservice.common.ApiConstants.APP_REVIEW_SUCCESS_MESSAGE;
-import static za.co.emmtapp.erpservice.common.ApiConstants.APP_SUCCESS_MESSAGE;
+import static za.co.emmtapp.erpservice.common.ApiConstants.*;
 
 @RestController
 @RequestMapping("/review")
@@ -34,7 +35,8 @@ public class ApplicationReviewAPI implements CrudApi<ApplicationReviewDTO> {
 
     @Override
     public ApiResponse<ApplicationReviewDTO> update(ApplicationReviewDTO applicationReviewDTO) {
-        return null;
+        ApplicationReviewDTO app = applicationReviewService.update(applicationReviewDTO);
+        return new ApiResponse<>(UPDATE_SUCCESS, APP_SUCCESS_MESSAGE, app);
     }
 
     @Override
@@ -44,11 +46,14 @@ public class ApplicationReviewAPI implements CrudApi<ApplicationReviewDTO> {
 
     @Override
     public ApiResponse<PaginationResult<ApplicationReviewDTO>> findAll(String search, Integer page, Integer size, String sortBy) {
-        return null;
+        var res = applicationReviewService.findAll(search, page, size, sortBy);
+        return new ApiResponse<>(HttpStatus.ACCEPTED.value(),  APP_SUCCESS_MESSAGE, res);
     }
 
     @Override
     public ApiResponse<ApplicationReviewDTO> find(String id) {
-        return null;
+        var application = applicationReviewService.find(id);
+        return new ApiResponse<>(HttpStatus.OK.value(), APP_RETRIEVE_SUCCESS, application);
     }
+
 }
