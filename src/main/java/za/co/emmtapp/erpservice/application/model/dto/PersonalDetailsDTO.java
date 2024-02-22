@@ -1,5 +1,6 @@
 package za.co.emmtapp.erpservice.application.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(
+        name = "PersonalDetails",
+        description = "Schema to hold Personal Details information"
+)
 public class PersonalDetailsDTO {
     private String title;
     private String firstName;

@@ -1,10 +1,15 @@
 package za.co.emmtapp.erpservice.application.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Schema(
+        name = "NextOfKin",
+        description = "Schema to hold NextOfKin Details"
+)
 public class NextOfKinDTO {
     private String applicantId;
     private String title;

@@ -1,5 +1,6 @@
 package za.co.emmtapp.erpservice.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ import za.co.emmtapp.erpservice.application.service.ApplicationService;
 
 import static za.co.emmtapp.erpservice.common.ApiConstants.*;
 
+@Tag(
+        name = "CRUD REST APIs for ERP Service",
+        description = "CRUD REST APIs for ERP Service Application Process to CREATE, UPDATE, FETCH AND DELETE applications"
+)
 @RestController
 @RequestMapping("/application")
 @Slf4j
@@ -46,7 +51,6 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
          return null;
     }
 
-    @DeleteMapping("deleteApplication/{id}")
     public ApiResponse<Boolean> delete(@PathVariable String id) {
         Boolean isDeleted = registrationService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), APP_DELETE_MESSAGE_SUCCESS, isDeleted);

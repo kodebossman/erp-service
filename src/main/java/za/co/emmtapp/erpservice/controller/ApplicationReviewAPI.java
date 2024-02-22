@@ -1,20 +1,22 @@
 package za.co.emmtapp.erpservice.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.common.ApiResponse;
 import za.co.emmtapp.erpservice.common.CrudApi;
 import za.co.emmtapp.erpservice.common.PaginationResult;
-import za.co.emmtapp.erpservice.review.model.ApplicationReview;
 import za.co.emmtapp.erpservice.review.model.dto.ApplicationReviewDTO;
 import za.co.emmtapp.erpservice.review.service.ApplicationReviewService;
 
 import static za.co.emmtapp.erpservice.common.ApiConstants.*;
 
+@Tag(
+        name = "CRUD REST APIs for ERP Review Process",
+        description = "CRUD REST APIs for ERP Service Review Process to manage applications"
+)
 @RestController
 @RequestMapping("/review")
 @Slf4j
