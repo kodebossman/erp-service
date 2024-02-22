@@ -1,6 +1,7 @@
 package za.co.emmtapp.erpservice.application.service;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 @Transactional
 public class ApplicationServiceImpl implements ApplicationService {
 
@@ -27,21 +29,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private  final EmploymentDetailsService employmentDetailsService;
     private final PreviousQualificationsService previousQualificationsService;
 
-
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository,
-                                  DocumentService documentService,
-                                  NextOfKinService nextOfKinService,
-                                  PersonalDetailsService personalDetailsService,
-                                  EmploymentDetailsService employmentDetailsService,
-                                  PreviousQualificationsService previousQualificationsService) {
-        this.applicationRepository = applicationRepository;
-        this.documentService = documentService;
-        this.nextOfKinService = nextOfKinService;
-        this.personalDetailsService = personalDetailsService;
-        this.employmentDetailsService = employmentDetailsService;
-        this.previousQualificationsService = previousQualificationsService;
-    }
-
+    private final EmploymentDetailsRepository employmentDetailsRepository;
 
     @Override
     public ApplicationDTO createRegistration(ApplicationDTO applicationDTO) {
@@ -149,19 +137,32 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public PaginationResult<ApplicationDTO> findAll(String search, Integer page, Integer size, String sortBy) {
         var pageable = PageRequest.of(page - 1, size, Sort.by(sortBy));
-        Page<Application> pageResult = applicationRepository.findAll(pageable);
+        Page<PersonalDetails> pageResult = personalDetailsService.findAll(pageable);
 
         List<ApplicationDTO> applicationDTOs = pageResult.getContent().stream()
-                .map(ApplicationServiceImpl::toDTO)
+                .map(this::convertToApplicationDto)
                 .toList();
+
+        log.info(applicationDTOs.toString());
 
         return PaginationResult.pagination(applicationDTOs, pageResult.getTotalElements(), page, size);
     }
 
-    public static ApplicationDTO toDTO(Application application) {
-        ApplicationDTO dto = new ApplicationDTO();
-        BeanUtils.copyProperties(application, dto);
-        return dto;
-    }
+    private ApplicationDTO convertToApplicationDto(PersonalDetails personalDetails) {
+        ApplicationDTO applicationDTO = new ApplicationDTO();
 
+        PersonalDetailsDTO personalDetailsDTO = new PersonalDetailsDTO();
+        DocumentationDTO documentationDTO = documentService.find(personalDetails.getIdNumber());
+        NextOfKinDTO nextOfKinDTO = nextOfKinService.find(personalDetails.getIdNumber());
+        PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.find(personalDetails.getIdNumber());
+        EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.find(personalDetails.getIdNumber());
+
+        BeanUtils.copyProperties(personalDetails, personalDetailsDTO);
+        applicationDTO.setPersonalDetails(personalDetailsDTO);
+        applicationDTO.setEmploymentDetails(employmentDetailsDTO);
+        applicationDTO.setDocumentation(documentationDTO);
+        applicationDTO.setNextOfKin(nextOfKinDTO);
+        applicationDTO.setPreviousQualifications(previousQualificationsDTO);
+        return applicationDTO;
+    }
 }

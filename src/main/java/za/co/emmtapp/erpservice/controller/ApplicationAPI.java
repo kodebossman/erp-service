@@ -60,12 +60,16 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
     @Override
     public ApiResponse<PaginationResult<ApplicationDTO>> findAll(String search, Integer page, Integer size, String sortBy) {
         var res = registrationService.findAll(search, page, size, sortBy);
-        return new ApiResponse<>(HttpStatus.ACCEPTED.value(),  APP_SUCCESS_MESSAGE, res);
+        return new ApiResponse<>(HttpStatus.OK.value(),  APP_RETRIEVE_SUCCESS, res);
     }
+
+
 
     @Override
     public ApiResponse<ApplicationDTO> find(String id) {
         var application = registrationService.find(id);
         return new ApiResponse<>(HttpStatus.OK.value(), APP_RETRIEVE_SUCCESS, application);
     }
+
+
 }

@@ -1,13 +1,20 @@
 package za.co.emmtapp.erpservice.application.service;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.PersonalDetails;
+import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.application.model.dto.PersonalDetailsDTO;
 import za.co.emmtapp.erpservice.application.repos.PersonalDetailsRepository;
+import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ApplicationAlreadyExistsException;
 import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
 
+import java.awt.print.Pageable;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,4 +74,11 @@ public class PersonalDetailsServiceImpl implements  PersonalDetailsService {
         personalDetailsRepository.deleteByIdNumber(personalDetails.getIdNumber());
         return true;
     }
+
+    @Override
+    public Page<PersonalDetails> findAll(PageRequest pageRequest) {
+        return personalDetailsRepository.findAll(pageRequest);
+    }
+
+
 }

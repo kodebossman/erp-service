@@ -49,7 +49,7 @@ public class ApplicationReviewAPI implements CrudApi<ApplicationReviewDTO> {
     @Override
     public ApiResponse<PaginationResult<ApplicationReviewDTO>> findAll(String search, Integer page, Integer size, String sortBy) {
         var res = applicationReviewService.findAll(search, page, size, sortBy);
-        return new ApiResponse<>(HttpStatus.ACCEPTED.value(),  APP_SUCCESS_MESSAGE, res);
+        return new ApiResponse<>(HttpStatus.OK.value(),  APP_RETRIEVE_SUCCESS, res);
     }
 
     @Override

@@ -21,8 +21,7 @@ public class ApplicationDTO {
     private DocumentationDTO documentation;
     private EmploymentDetailsDTO employmentDetails;
     private PreviousQualificationsDTO previousQualifications;
-    private String applicationStatus;
-    private String applicationType;
-    private String applicationFee;
-
+//    private String applicationStatus;
+//    private String applicationType;
+//    private String applicationFee;
 }
