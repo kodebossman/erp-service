@@ -8,6 +8,8 @@ import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 import za.co.emmtapp.erpservice.application.repos.DocumentationRepository;
 import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class DocumentServiceImpl implements DocumentService {
@@ -57,6 +59,13 @@ public class DocumentServiceImpl implements DocumentService {
     public boolean delete(String id) {
         documentationRepository.deleteByOwnerId(id);
         return true;
+    }
+
+    @Override
+    public List<DocumentationDTO> findAllByOwnerId(String ownerId) {
+        List<Documentation> docs = documentationRepository.findAllByOwnerId(ownerId);
+        DocumentationDTO documentationDTO = new DocumentationDTO();
+        return docs.stream().map(documentation -> documentationDTO).toList();
     }
 
 }

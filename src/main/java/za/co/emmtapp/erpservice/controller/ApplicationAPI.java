@@ -51,6 +51,7 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
          return null;
     }
 
+    @DeleteMapping("/delete/{id}")
     public ApiResponse<Boolean> delete(@PathVariable String id) {
         Boolean isDeleted = registrationService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), APP_DELETE_MESSAGE_SUCCESS, isDeleted);

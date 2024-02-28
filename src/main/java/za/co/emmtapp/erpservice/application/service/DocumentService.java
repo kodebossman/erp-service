@@ -3,8 +3,10 @@ package za.co.emmtapp.erpservice.application.service;
 import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 
+import java.util.List;
+
 public interface DocumentService {
-    public DocumentationDTO create(DocumentationDTO documentation);
+    DocumentationDTO create(DocumentationDTO documentation);
 
     DocumentationDTO find(String id);
 
@@ -12,4 +14,5 @@ public interface DocumentService {
 
     boolean delete(String id);
 
+    List<DocumentationDTO> findAllByOwnerId(String ownerId);
 }

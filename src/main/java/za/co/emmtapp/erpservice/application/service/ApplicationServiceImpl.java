@@ -10,10 +10,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.*;
 import za.co.emmtapp.erpservice.application.model.dto.*;
-import za.co.emmtapp.erpservice.application.repos.*;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ApplicationAlreadyExistsException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,14 +22,12 @@ import java.util.List;
 @Transactional
 public class ApplicationServiceImpl implements ApplicationService {
 
-    private final ApplicationRepository applicationRepository;
     private final DocumentService documentService;
     private  final NextOfKinService nextOfKinService;
     private final PersonalDetailsService personalDetailsService;
     private  final EmploymentDetailsService employmentDetailsService;
     private final PreviousQualificationsService previousQualificationsService;
 
-    private final EmploymentDetailsRepository employmentDetailsRepository;
 
     @Override
     public ApplicationDTO createRegistration(ApplicationDTO applicationDTO) {
@@ -38,19 +36,24 @@ public class ApplicationServiceImpl implements ApplicationService {
             PersonalDetailsDTO personalDetailsDTO = personalDetailsService.create(applicationDTO.getPersonalDetails());
             String idNumber = applicationDTO.getPersonalDetails().getIdNumber();
 
-            applicationDTO.getDocumentation().setOwnerId(idNumber);
+            applicationDTO.getDocumentation().forEach(document -> document.setOwnerId(idNumber));
             applicationDTO.getNextOfKin().setApplicantId(idNumber);
             applicationDTO.getEmploymentDetails().setApplicantId(idNumber);
             applicationDTO.getPreviousQualifications().setOwnerId(idNumber);
 
 
-            DocumentationDTO documentationDTO = documentService.create(applicationDTO.getDocumentation());
+            List<DocumentationDTO> documentations = new ArrayList<>();
+
+            for (var documentation : applicationDTO.getDocumentation()) {
+                DocumentationDTO documentationDTO = documentService.create(documentation);
+                documentations.add(documentationDTO);
+            }
             NextOfKinDTO nextOfKinDTO = nextOfKinService.create(applicationDTO.getNextOfKin());
             EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.create(applicationDTO.getEmploymentDetails());
             PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.create(applicationDTO.getPreviousQualifications());
 
             applicationDTO.setPersonalDetails(personalDetailsDTO);
-            applicationDTO.setDocumentation(documentationDTO);
+            applicationDTO.setDocumentation(documentations);
             applicationDTO.setNextOfKin(nextOfKinDTO);
             applicationDTO.setEmploymentDetails(employmentDetailsDTO);
             applicationDTO.setPreviousQualifications(previousQualificationsDTO);
@@ -69,13 +72,13 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         PersonalDetailsDTO personalDetailsDTO = personalDetailsService.find(idNumber);
         NextOfKinDTO nextOfKinDTO = nextOfKinService.find(idNumber);
-        DocumentationDTO documentationDTO = documentService.find(idNumber);
+        List<DocumentationDTO> documentationDTOs = documentService.findAllByOwnerId(idNumber);
         EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.find(idNumber);
         PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.find(idNumber);
 
         applicationDTO.setPersonalDetails(personalDetailsDTO);
         applicationDTO.setNextOfKin(nextOfKinDTO);
-        applicationDTO.setDocumentation(documentationDTO);
+        applicationDTO.setDocumentation(documentationDTOs);
         applicationDTO.setPreviousQualifications(previousQualificationsDTO);
         applicationDTO.setEmploymentDetails(employmentDetailsDTO);
 
@@ -100,12 +103,12 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public ApplicationDTO update(ApplicationDTO applicationDTO) {
 
-        applicationDTO.getDocumentation().setOwnerId(applicationDTO.getPersonalDetails().getIdNumber());
+        applicationDTO.getDocumentation().forEach(doc -> doc.setOwnerId(applicationDTO.getPersonalDetails().getIdNumber()));
         applicationDTO.getEmploymentDetails().setApplicantId(applicationDTO.getPersonalDetails().getIdNumber());
         applicationDTO.getNextOfKin().setApplicantId(applicationDTO.getPersonalDetails().getIdNumber());
         applicationDTO.getPreviousQualifications().setOwnerId(applicationDTO.getPersonalDetails().getIdNumber());
 
-        DocumentationDTO documentationDTO = applicationDTO.getDocumentation();
+        List<DocumentationDTO> documentationDTO = applicationDTO.getDocumentation();
         EmploymentDetailsDTO employmentDetailsDTO = applicationDTO.getEmploymentDetails();
         NextOfKinDTO nextOfKinDTO = applicationDTO.getNextOfKin();
         PersonalDetailsDTO personalDetailsDTO = applicationDTO.getPersonalDetails();
@@ -116,7 +119,8 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
 
         if (documentationDTO != null) {
-            documentService.update(documentationDTO);
+            documentationDTO.forEach(documentService::update);
+
         }
 
         if (employmentDetailsDTO != null) {
@@ -152,7 +156,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         ApplicationDTO applicationDTO = new ApplicationDTO();
 
         PersonalDetailsDTO personalDetailsDTO = new PersonalDetailsDTO();
-        DocumentationDTO documentationDTO = documentService.find(personalDetails.getIdNumber());
+        List<DocumentationDTO> documentationDTO = documentService.findAllByOwnerId(personalDetails.getIdNumber());
         NextOfKinDTO nextOfKinDTO = nextOfKinService.find(personalDetails.getIdNumber());
         PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.find(personalDetails.getIdNumber());
         EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.find(personalDetails.getIdNumber());

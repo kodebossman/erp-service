@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class ApplicationDTO {
 
     private PersonalDetailsDTO personalDetails;
     private NextOfKinDTO nextOfKin;
-    private DocumentationDTO documentation;
+    private List<DocumentationDTO> documentation;
     private EmploymentDetailsDTO employmentDetails;
     private PreviousQualificationsDTO previousQualifications;
 //    private String applicationStatus;
