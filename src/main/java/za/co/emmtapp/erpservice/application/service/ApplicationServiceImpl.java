@@ -27,6 +27,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final PersonalDetailsService personalDetailsService;
     private  final EmploymentDetailsService employmentDetailsService;
     private final PreviousQualificationsService previousQualificationsService;
+    private final ApplicationDetailsService applicationDetailsService;
 
 
     @Override
@@ -37,12 +38,18 @@ public class ApplicationServiceImpl implements ApplicationService {
             String idNumber = applicationDTO.getPersonalDetails().getIdNumber();
 
             applicationDTO.getDocumentation().forEach(document -> document.setOwnerId(idNumber));
+            applicationDTO.getApplications().forEach(application -> application.setApplicationId(idNumber));
             applicationDTO.getNextOfKin().setApplicantId(idNumber);
             applicationDTO.getEmploymentDetails().setApplicantId(idNumber);
             applicationDTO.getPreviousQualifications().setOwnerId(idNumber);
 
-
             List<DocumentationDTO> documentations = new ArrayList<>();
+            List<ApplicationDetailDTO> applications = new ArrayList<>();
+
+            for (var application : applicationDTO.getApplications()) {
+                ApplicationDetailDTO applicationDetailDTO = applicationDetailsService.create(application);
+                applications.add(applicationDetailDTO);
+            }
 
             for (var documentation : applicationDTO.getDocumentation()) {
                 DocumentationDTO documentationDTO = documentService.create(documentation);
@@ -52,6 +59,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.create(applicationDTO.getEmploymentDetails());
             PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.create(applicationDTO.getPreviousQualifications());
 
+            applicationDTO.setApplications(applications);
             applicationDTO.setPersonalDetails(personalDetailsDTO);
             applicationDTO.setDocumentation(documentations);
             applicationDTO.setNextOfKin(nextOfKinDTO);
@@ -70,12 +78,14 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         ApplicationDTO applicationDTO = new ApplicationDTO();
 
+        List<ApplicationDetailDTO> applicationDetailDTOS = applicationDetailsService.findAllByApplicationId(idNumber);
         PersonalDetailsDTO personalDetailsDTO = personalDetailsService.find(idNumber);
         NextOfKinDTO nextOfKinDTO = nextOfKinService.find(idNumber);
         List<DocumentationDTO> documentationDTOs = documentService.findAllByOwnerId(idNumber);
         EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.find(idNumber);
         PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.find(idNumber);
 
+        applicationDTO.setApplications(applicationDetailDTOS);
         applicationDTO.setPersonalDetails(personalDetailsDTO);
         applicationDTO.setNextOfKin(nextOfKinDTO);
         applicationDTO.setDocumentation(documentationDTOs);

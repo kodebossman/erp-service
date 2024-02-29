@@ -8,15 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import za.co.emmtapp.erpservice.application.model.Application;
-import za.co.emmtapp.erpservice.application.model.Documentation;
 import za.co.emmtapp.erpservice.application.model.PersonalDetails;
-import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
-import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 import za.co.emmtapp.erpservice.application.repos.PersonalDetailsRepository;
-import za.co.emmtapp.erpservice.application.service.ApplicationServiceImpl;
 import za.co.emmtapp.erpservice.common.PaginationResult;
-import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 import za.co.emmtapp.erpservice.review.model.ApplicationReview;
 import za.co.emmtapp.erpservice.review.model.ApplicationReviewStatus;
 import za.co.emmtapp.erpservice.review.model.dto.ApplicationReviewDTO;
@@ -43,7 +38,7 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
 
         PersonalDetails  personalDetails = personalDetailsRepository
                 .findByIdNumber(applicationReviewDTO.getApplicationId()).orElseThrow(
-                        () -> new ApplicationNotFoundException("No valid email address for the given applicant")
+                        () -> new ResourceNotFoundException("No valid email address for the given applicant")
                 );
 
 
@@ -87,7 +82,7 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
     public ApplicationReviewDTO update(ApplicationReviewDTO applicationReviewDTO) {
         if (applicationReviewDTO != null) {
             ApplicationReview applicationReview = applicationReviewRepository.findByApplicationId(applicationReviewDTO.getApplicationId()).orElseThrow(
-                    () -> new ApplicationNotFoundException("application with provided " + applicationReviewDTO.getApplicationId() + "  not found")
+                    () -> new ResourceNotFoundException("application with provided " + applicationReviewDTO.getApplicationId() + "  not found")
             );
 
             BeanUtils.copyProperties(applicationReviewDTO, applicationReview);
@@ -103,7 +98,7 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
     public ApplicationReviewDTO find(String id) {
         ApplicationReviewDTO applicationReviewDTO = new ApplicationReviewDTO();
         ApplicationReview applicationReview =  applicationReviewRepository.findByApplicationId(id).orElseThrow(
-                () -> new ApplicationNotFoundException("application with provided " + applicationReviewDTO.getApplicationId() + "  not found")
+                () -> new ResourceNotFoundException("application with provided " + applicationReviewDTO.getApplicationId() + "  not found")
         );
         BeanUtils.copyProperties(applicationReview, applicationReviewDTO);
         return applicationReviewDTO;

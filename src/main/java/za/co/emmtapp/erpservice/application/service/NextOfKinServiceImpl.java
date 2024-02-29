@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.NextOfKin;
 import za.co.emmtapp.erpservice.application.model.dto.NextOfKinDTO;
 import za.co.emmtapp.erpservice.application.repos.NextOfKinRepository;
-import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 
 @Service
 @Transactional
@@ -31,7 +31,7 @@ public class NextOfKinServiceImpl implements NextOfKinService {
 
         if (nextOfKinDTO != null) {
             NextOfKin nextOfKin = nextOfKinRepository.findByApplicantId(nextOfKinDTO.getApplicantId()).orElseThrow(
-                    () -> new ApplicationNotFoundException("application with provided Id not found")
+                    () -> new ResourceNotFoundException("application with provided Id not found")
             );
 
             BeanUtils.copyProperties(nextOfKinDTO, nextOfKin);
@@ -46,7 +46,7 @@ public class NextOfKinServiceImpl implements NextOfKinService {
     public NextOfKinDTO find(String applicantId) {
         NextOfKinDTO nextOfKinDTO = new NextOfKinDTO();
         NextOfKin nextOfKin =  nextOfKinRepository.findByApplicantId(applicantId).orElseThrow(
-                () -> new ApplicationNotFoundException("Application with provided Id not found")
+                () -> new ResourceNotFoundException("Application with provided Id not found")
         );
         BeanUtils.copyProperties(nextOfKin, nextOfKinDTO);
         return nextOfKinDTO;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.Documentation;
 import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 import za.co.emmtapp.erpservice.application.repos.DocumentationRepository;
-import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentationDTO find(String id) {
         DocumentationDTO documentationDTO = new DocumentationDTO();
         Documentation documentation =  documentationRepository.findByOwnerId(id).orElseThrow(
-                () -> new ApplicationNotFoundException("application with provided Id not found")
+                () -> new ResourceNotFoundException("application with provided Id not found")
         );
         BeanUtils.copyProperties(documentation, documentationDTO);
         return documentationDTO;
@@ -44,7 +44,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         if (documentationDTO != null) {
             Documentation documentation = documentationRepository.findByOwnerId(documentationDTO.getOwnerId()).orElseThrow(
-                    () -> new ApplicationNotFoundException("application with provided Id not found")
+                    () -> new ResourceNotFoundException("application with provided Id not found")
             );
 
             BeanUtils.copyProperties(documentationDTO, documentation);

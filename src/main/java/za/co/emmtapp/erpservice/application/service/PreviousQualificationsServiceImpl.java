@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.PreviousQualifications;
 import za.co.emmtapp.erpservice.application.model.dto.PreviousQualificationsDTO;
 import za.co.emmtapp.erpservice.application.repos.PreviousQualificationsRepository;
-import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 
 @Service
 @Transactional
@@ -33,7 +33,7 @@ public class PreviousQualificationsServiceImpl implements  PreviousQualification
             PreviousQualifications previousQualifications = previousQualificationsRepository
                     .findByOwnerId(previousQualificationsDTO.getOwnerId())
                     .orElseThrow(
-                    () -> new ApplicationNotFoundException("application with provided Id not found")
+                    () -> new ResourceNotFoundException("application with provided Id not found")
             );
 
             BeanUtils.copyProperties(previousQualificationsDTO, previousQualifications);
@@ -48,7 +48,7 @@ public class PreviousQualificationsServiceImpl implements  PreviousQualification
     public PreviousQualificationsDTO find(String id) {
         PreviousQualificationsDTO previousQualificationsDTO = new PreviousQualificationsDTO();
         PreviousQualifications previousQualifications =  previousQualificationsRepository.findByOwnerId(id).orElseThrow(
-                () -> new ApplicationNotFoundException("application with provided Id not found")
+                () -> new ResourceNotFoundException("application with provided Id not found")
         );
         BeanUtils.copyProperties(previousQualifications, previousQualificationsDTO);
         return previousQualificationsDTO;

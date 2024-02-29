@@ -57,14 +57,11 @@ public class ApplicationAPI implements CrudApi<ApplicationDTO> {
         return new ApiResponse<>(HttpStatus.OK.value(), APP_DELETE_MESSAGE_SUCCESS, isDeleted);
     }
 
-
     @Override
     public ApiResponse<PaginationResult<ApplicationDTO>> findAll(String search, Integer page, Integer size, String sortBy) {
         var res = registrationService.findAll(search, page, size, sortBy);
         return new ApiResponse<>(HttpStatus.OK.value(),  APP_RETRIEVE_SUCCESS, res);
     }
-
-
 
     @Override
     public ApiResponse<ApplicationDTO> find(String id) {

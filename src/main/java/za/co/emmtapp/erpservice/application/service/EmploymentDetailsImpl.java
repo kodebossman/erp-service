@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.EmploymentDetails;
 import za.co.emmtapp.erpservice.application.model.dto.EmploymentDetailsDTO;
 import za.co.emmtapp.erpservice.application.repos.EmploymentDetailsRepository;
-import za.co.emmtapp.erpservice.exceptions.ApplicationNotFoundException;
+import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 
 @Service
 @Transactional
@@ -28,7 +28,7 @@ public class EmploymentDetailsImpl implements EmploymentDetailsService {
     public EmploymentDetailsDTO find(String applicantId) {
         EmploymentDetailsDTO employmentDetailsDTO = new EmploymentDetailsDTO();
         EmploymentDetails employmentDetails =  employmentDetailsRepository.findByApplicantId(applicantId).orElseThrow(
-                () -> new ApplicationNotFoundException("application with provided Id not found")
+                () -> new ResourceNotFoundException("application with provided Id not found")
         );
         BeanUtils.copyProperties(employmentDetails, employmentDetailsDTO);
         return employmentDetailsDTO;
@@ -40,7 +40,7 @@ public class EmploymentDetailsImpl implements EmploymentDetailsService {
 
         if (employmentDetailsDTO != null) {
             EmploymentDetails employmentDetails = employmentDetailsRepository.findByApplicantId(employmentDetailsDTO.getApplicantId()).orElseThrow(
-                    () -> new ApplicationNotFoundException("application with provided Id not found")
+                    () -> new ResourceNotFoundException("application with provided Id not found")
             );
 
             BeanUtils.copyProperties(employmentDetailsDTO, employmentDetails);

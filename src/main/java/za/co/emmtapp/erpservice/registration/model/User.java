@@ -1,4 +1,4 @@
-package za.co.emmtapp.erpservice.application.model;
+package za.co.emmtapp.erpservice.registration.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -8,13 +8,22 @@ import lombok.ToString;
 import za.co.emmtapp.erpservice.common.BaseEntity;
 
 @Entity
-@Table(name = "registration")
+@Table(name = "users")
 @Getter
 @Setter
 @ToString
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Application extends BaseEntity {
+public class User extends BaseEntity {
+    @Column(name = "username", nullable = false, length = 45)
+    private String username;
+
+    @Column(name = "password", nullable = false, length = 45)
+    private String password;
+
+    @Column(name = "courses_enrolled", nullable = false, length = 45)
+    private long coursesEnrolled;
+
     @Column(name = "title", nullable = false, length = 45)
     private String title;
 
@@ -45,10 +54,10 @@ public class Application extends BaseEntity {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "phone", unique = true, nullable = false, length = 10)
+    @Column(name = "phone", nullable = false, length = 12) // unique = true,
     private String mobileNumber;
 
-    @Column(name = "email_address", unique = true, nullable = false, length = 45)
+    @Column(name = "email_address",  nullable = false, length = 45) // unique = true,
     private String emailAddress;
 
     @Column(name = "nationality")
@@ -56,17 +65,4 @@ public class Application extends BaseEntity {
 
     @Column(name = "gender")
     private String gender;
-
-    @Column(name = "application_type")
-    private String applicationType;
-
-    @Column(name = "application_date")
-    private String applicationDate;
-
-    @Column(name = "status")
-    private String applicationStatus;
-
-    @Column(name = "fee")
-    private String applicationFee;
-
 }

@@ -29,6 +29,4 @@ public class PersonalDetailsDTO {
     private String emailAddress;
     private String nationality;
     private String gender;
-    private String applicationType;
-    private String applicationDate;
 }

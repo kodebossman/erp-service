@@ -18,12 +18,10 @@ import java.util.List;
 )
 public class ApplicationDTO {
 
+    private List<ApplicationDetailDTO> applications;
     private PersonalDetailsDTO personalDetails;
     private NextOfKinDTO nextOfKin;
     private List<DocumentationDTO> documentation;
     private EmploymentDetailsDTO employmentDetails;
     private PreviousQualificationsDTO previousQualifications;
-//    private String applicationStatus;
-//    private String applicationType;
-//    private String applicationFee;
 }

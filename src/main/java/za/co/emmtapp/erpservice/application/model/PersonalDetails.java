@@ -59,11 +59,4 @@ public class PersonalDetails extends BaseEntity {
 
     @Column(name = "gender")
     private String gender;
-
-    @Column(name = "application_type")
-    private String applicationType;
-
-    @Column(name = "application_date")
-    private String applicationDate;
-
 }

@@ -23,8 +23,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ApplicationNotFoundException.class)
-    public ResponseEntity<ErrorResponseDto> handleResourceNotFoundException(ApplicationNotFoundException exception,
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleResourceNotFoundException(ResourceNotFoundException exception,
                                                                             WebRequest webRequest){
         ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
                 webRequest.getDescription(false),
@@ -35,14 +35,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
     }
 
-//    @ExceptionHandler(DataIntegrityViolationException.class)
-//    public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-//        String errorMessage = "Error occurred due to database constraint violation: ";
-//        if (ex.getMessage().contains("unique constraint")) {
-//            errorMessage += "ID Number provided is not unique.";
-//        } else {
-//            errorMessage += ex.getMessage(); // Or provide a generic error message
-//        }
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-//    }
+    @ExceptionHandler(SubscriptionAlreadyExistException.class)
+    public ResponseEntity<ErrorResponseDto> handleSubscriptionAlreadyExistsException(SubscriptionAlreadyExistException exception,
+                                                                            WebRequest webRequest){
+        ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
+                webRequest.getDescription(false),
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
+    }
 }
