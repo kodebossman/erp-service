@@ -14,5 +14,6 @@ public class ApplicationReviewDTO {
     private ApplicationReviewStatus status;
     private String comments;
     private String description;
+    private String registrationLink;
     private String  applicationId;
 }

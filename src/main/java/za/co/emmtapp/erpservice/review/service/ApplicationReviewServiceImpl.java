@@ -44,7 +44,12 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
 
         String emailAddress = personalDetails.getEmailAddress();
 
-        if (status.equals(ApplicationReviewStatus.ACCEPTED)){
+        if (status.equals(ApplicationReviewStatus.ACCEPTED)) {
+            String applicationId = personalDetails.getIdNumber();
+
+            String registrationLink = "localhost:8080/register/" + applicationId;
+            String description = applicationReviewDTO.getDescription() + registrationLink;
+            applicationReviewDTO.setDescription(description);
             try {
                 emailService.sendProfileConfirmationMail(applicationReviewDTO, emailAddress, "ACCEPTED");
             } catch (MessagingException e) {

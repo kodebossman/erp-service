@@ -21,13 +21,13 @@ public class ApplicationReview extends BaseEntity {
     @Column(name = "review_status", nullable = false, length = 45)
     private String reviewStatus;
 
-    @Column(name = "status", nullable = false, length = 45)
+    @Column(name = "status", nullable = false, length = 245)
     @Enumerated(EnumType.STRING)
     private ApplicationReviewStatus status;
 
-    @Column(name = "comments", nullable = false, length = 45)
+    @Column(name = "comments", nullable = false, length = 245)
     private String comments;
 
-    @Column(name = "description", nullable = false, length = 45)
+    @Column(name = "description", nullable = false, length = 245)
     private String description;
 }
