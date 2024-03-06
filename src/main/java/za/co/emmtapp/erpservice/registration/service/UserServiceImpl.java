@@ -8,9 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
-import za.co.emmtapp.erpservice.registration.model.Course;
 import za.co.emmtapp.erpservice.registration.model.User;
-import za.co.emmtapp.erpservice.registration.model.dto.CourseDTO;
 import za.co.emmtapp.erpservice.registration.model.dto.UserDTO;
 import za.co.emmtapp.erpservice.registration.repository.UserRepository;
 

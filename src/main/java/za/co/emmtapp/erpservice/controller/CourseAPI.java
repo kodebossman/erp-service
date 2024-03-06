@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.emmtapp.erpservice.common.ApiResponse;
 import za.co.emmtapp.erpservice.common.PaginationResult;
+import za.co.emmtapp.erpservice.registration.model.Course;
+import za.co.emmtapp.erpservice.registration.model.Module;
 import za.co.emmtapp.erpservice.registration.model.dto.CourseDTO;
 import za.co.emmtapp.erpservice.registration.service.CourseService;
 
@@ -33,6 +35,18 @@ public class CourseAPI {
     public ApiResponse<Boolean> deleteCourse(@PathVariable Long id) {
         var deleted = courseService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), APP_DELETE_MESSAGE_SUCCESS, deleted);
+    }
+
+    @PostMapping("/{courseId}/users/{userId}")
+    public ApiResponse<CourseDTO> enrollUserToCourse(@PathVariable long courseId, @PathVariable long userId) {
+        CourseDTO courseDTO = courseService.registerUserForCourse(courseId, userId);
+        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, courseDTO);
+    }
+
+    @PostMapping("/{courseId}/modules/{moduleId}")
+    public ApiResponse<Module> assignModuleToCourse(@PathVariable long courseId, @PathVariable long moduleId) {
+        Module module = courseService.registerModulesForCourse(courseId, moduleId);
+        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, module);
     }
 
     @GetMapping("/all")

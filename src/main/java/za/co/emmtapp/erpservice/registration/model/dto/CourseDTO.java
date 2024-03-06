@@ -1,6 +1,10 @@
 package za.co.emmtapp.erpservice.registration.model.dto;
 
 import lombok.Data;
+import za.co.emmtapp.erpservice.registration.model.User;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 public class CourseDTO {
@@ -8,5 +12,5 @@ public class CourseDTO {
 
     long capacity;
 
-    long enrolledUsers;
+    Set<User> enrolledUsers = new HashSet<>();
 }

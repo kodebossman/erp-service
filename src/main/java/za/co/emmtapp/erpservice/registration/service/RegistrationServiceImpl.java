@@ -69,7 +69,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (existingSubscription.isPresent()) {
             throw new SubscriptionAlreadyExistException("User " + userId + " is already subscribed to course " + courseId);
         } else {
-            course.setEnrolledUsers(course.getEnrolledUsers() + 1);
+//            course.setEnrolledUsers(course.getEnrolledUsers() + 1);
             courseRepository.save(course);
             UserCourse userCourse = new UserCourse(userId, courseId);
             userCourseRepository.save(userCourse);
