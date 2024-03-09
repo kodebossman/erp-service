@@ -4,6 +4,7 @@ import za.co.emmtapp.erpservice.registration.model.dto.UserDTO;
 
 public interface RegistrationService {
     UserDTO registerUser(String applicationId, UserDTO userDTO);
+    void enrollUserInCourse(Long userId, Long intakeId);
 
-    void registerUserForCourse(long userId, long courseId, long intakeId);
+    void addModuleToEnrollment(Long enrollmentId, Long moduleId);
 }

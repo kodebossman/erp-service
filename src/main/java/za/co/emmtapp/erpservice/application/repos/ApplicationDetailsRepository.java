@@ -5,8 +5,9 @@ import org.springframework.stereotype.Repository;
 import za.co.emmtapp.erpservice.application.model.ApplicationDetails;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ApplicationDetailsRepository extends JpaRepository<ApplicationDetails, Long> {
-    List<ApplicationDetails> findAllByApplicationId(String applicationId);
+    Optional<ApplicationDetails> findByApplicationId(String applicationId);
 }

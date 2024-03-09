@@ -6,6 +6,6 @@ import za.co.emmtapp.erpservice.registration.model.Intake;
 
 @Repository
 public interface IntakeRepository extends JpaRepository<Intake, Long> {
-    boolean existsById(Long intakeId);
+//    boolean existsById(Long intakeId);
 
 }

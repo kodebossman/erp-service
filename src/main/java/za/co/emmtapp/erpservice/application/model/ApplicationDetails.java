@@ -25,7 +25,8 @@ public class ApplicationDetails extends BaseEntity {
     private String applicationDate;
 
     @Column(name = "status")
-    private String applicationStatus;
+    @Enumerated(EnumType.STRING)
+    private ApplicationStatus applicationStatus;
 
     @Column(name = "fee")
     private Double applicationFee;

@@ -38,28 +38,27 @@ public class ApplicationServiceImpl implements ApplicationService {
             String idNumber = applicationDTO.getPersonalDetails().getIdNumber();
 
             applicationDTO.getDocumentation().forEach(document -> document.setOwnerId(idNumber));
-            applicationDTO.getApplications().forEach(application -> application.setApplicationId(idNumber));
+            applicationDTO.getApplicationDetails().setApplicationId(idNumber);
             applicationDTO.getNextOfKin().setApplicantId(idNumber);
             applicationDTO.getEmploymentDetails().setApplicantId(idNumber);
             applicationDTO.getPreviousQualifications().setOwnerId(idNumber);
 
-            List<DocumentationDTO> documentations = new ArrayList<>();
-            List<ApplicationDetailDTO> applications = new ArrayList<>();
+            // Set the Default status of a newly created Application
+            applicationDTO.getApplicationDetails().setApplicationStatus(ApplicationStatus.PENDING);
 
-            for (var application : applicationDTO.getApplications()) {
-                ApplicationDetailDTO applicationDetailDTO = applicationDetailsService.create(application);
-                applications.add(applicationDetailDTO);
-            }
+            List<DocumentationDTO> documentations = new ArrayList<>();
 
             for (var documentation : applicationDTO.getDocumentation()) {
                 DocumentationDTO documentationDTO = documentService.create(documentation);
                 documentations.add(documentationDTO);
             }
+
+            ApplicationDetailDTO applicationDetailDTO =applicationDetailsService.create(applicationDTO.getApplicationDetails());
             NextOfKinDTO nextOfKinDTO = nextOfKinService.create(applicationDTO.getNextOfKin());
             EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.create(applicationDTO.getEmploymentDetails());
             PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.create(applicationDTO.getPreviousQualifications());
 
-            applicationDTO.setApplications(applications);
+            applicationDTO.setApplicationDetails(applicationDetailDTO);
             applicationDTO.setPersonalDetails(personalDetailsDTO);
             applicationDTO.setDocumentation(documentations);
             applicationDTO.setNextOfKin(nextOfKinDTO);
@@ -78,16 +77,18 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         ApplicationDTO applicationDTO = new ApplicationDTO();
 
-        List<ApplicationDetailDTO> applicationDetailDTOS = applicationDetailsService.findAllByApplicationId(idNumber);
+        ApplicationDetailDTO applicationDetailDTOS = applicationDetailsService.find(idNumber);
         PersonalDetailsDTO personalDetailsDTO = personalDetailsService.find(idNumber);
         NextOfKinDTO nextOfKinDTO = nextOfKinService.find(idNumber);
         List<DocumentationDTO> documentationDTOs = documentService.findAllByOwnerId(idNumber);
         EmploymentDetailsDTO employmentDetailsDTO = employmentDetailsService.find(idNumber);
         PreviousQualificationsDTO previousQualificationsDTO = previousQualificationsService.find(idNumber);
 
-        applicationDTO.setApplications(applicationDetailDTOS);
+        applicationDTO.setDocumentation(documentationDTOs);
+        applicationDTO.setApplicationDetails(applicationDetailDTOS);
         applicationDTO.setPersonalDetails(personalDetailsDTO);
         applicationDTO.setNextOfKin(nextOfKinDTO);
+
         applicationDTO.setDocumentation(documentationDTOs);
         applicationDTO.setPreviousQualifications(previousQualificationsDTO);
         applicationDTO.setEmploymentDetails(employmentDetailsDTO);

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ApplicationDetailsService {
     ApplicationDetailDTO create(ApplicationDetailDTO applicationDetailDTO);
-    List<ApplicationDetailDTO> findAllByApplicationId(String applicationId);
+    ApplicationDetailDTO find(String applicationId);
 }

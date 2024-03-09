@@ -37,18 +37,6 @@ public class CourseAPI {
         return new ApiResponse<>(HttpStatus.OK.value(), APP_DELETE_MESSAGE_SUCCESS, deleted);
     }
 
-    @PostMapping("/{courseId}/users/{userId}")
-    public ApiResponse<CourseDTO> enrollUserToCourse(@PathVariable long courseId, @PathVariable long userId) {
-        CourseDTO courseDTO = courseService.registerUserForCourse(courseId, userId);
-        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, courseDTO);
-    }
-
-    @PostMapping("/{courseId}/modules/{moduleId}")
-    public ApiResponse<Module> assignModuleToCourse(@PathVariable long courseId, @PathVariable long moduleId) {
-        Module module = courseService.registerModulesForCourse(courseId, moduleId);
-        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, module);
-    }
-
     @GetMapping("/all")
     public ApiResponse<PaginationResult<CourseDTO>> findAll(@RequestParam(defaultValue = "") String search,
                                                             @RequestParam(defaultValue = "1") Integer page,

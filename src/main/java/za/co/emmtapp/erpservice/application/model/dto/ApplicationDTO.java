@@ -18,7 +18,7 @@ import java.util.List;
 )
 public class ApplicationDTO {
 
-    private List<ApplicationDetailDTO> applications;
+    private ApplicationDetailDTO applicationDetails;
     private PersonalDetailsDTO personalDetails;
     private NextOfKinDTO nextOfKin;
     private List<DocumentationDTO> documentation;

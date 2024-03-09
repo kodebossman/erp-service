@@ -6,16 +6,9 @@ import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.application.model.PersonalDetails;
 import za.co.emmtapp.erpservice.application.repos.PersonalDetailsRepository;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
-import za.co.emmtapp.erpservice.exceptions.SubscriptionAlreadyExistException;
-import za.co.emmtapp.erpservice.registration.model.Course;
-import za.co.emmtapp.erpservice.registration.model.Intake;
-import za.co.emmtapp.erpservice.registration.model.UserCourse;
 import za.co.emmtapp.erpservice.registration.model.dto.UserDTO;
 import za.co.emmtapp.erpservice.registration.model.User;
-import za.co.emmtapp.erpservice.registration.repository.CourseRepository;
-import za.co.emmtapp.erpservice.registration.repository.IntakeRepository;
-import za.co.emmtapp.erpservice.registration.repository.UserCourseRepository;
-import za.co.emmtapp.erpservice.registration.repository.UserRepository;
+import za.co.emmtapp.erpservice.registration.repository.*;
 
 import java.util.Optional;
 
@@ -25,12 +18,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final UserRepository userRepository;
 
-    private final CourseRepository courseRepository;
+    private final EnrollmentService enrollmentService;
 
-    private final IntakeRepository intakeRepository;
-
-    private final UserCourseRepository userCourseRepository;
-
+    private final EnrolledModuleService enrolledModuleService;
 
     private final PersonalDetailsRepository personalDetailsRepository;
     @Override
@@ -51,31 +41,14 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public void registerUserForCourse(long userId, long courseId, long intakeId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new ResourceNotFoundException("User with id: " + userId + " not found!")
-        );
-
-        Course course = courseRepository.findById(courseId).orElseThrow(
-                () -> new ResourceNotFoundException("Course with id: " + courseId + " not found!")
-        );
-
-        Intake intake = intakeRepository.findById(intakeId).orElseThrow(
-                () -> new ResourceNotFoundException("Intake with id: " + intakeId + " not found!")
-        );
-
-        Optional<UserCourse> existingSubscription = userCourseRepository.findByUserIdAndCourseId(userId, courseId);
-
-        if (existingSubscription.isPresent()) {
-            throw new SubscriptionAlreadyExistException("User " + userId + " is already subscribed to course " + courseId);
-        } else {
-//            course.setEnrolledUsers(course.getEnrolledUsers() + 1);
-            courseRepository.save(course);
-            UserCourse userCourse = new UserCourse(userId, courseId);
-            userCourseRepository.save(userCourse);
-        }
+    public void enrollUserInCourse(Long userId, Long intakeId) {
+        enrollmentService.enrollUserInCourse(userId, intakeId);
     }
 
+    @Override
+    public void addModuleToEnrollment(Long enrolmentId, Long moduleId) {
+        enrolledModuleService.addModuleToEnrollment(enrolmentId, moduleId);
+    }
 
     private User mapApplicantToUser(PersonalDetails applicant) {
         // Map applicant information to user fields

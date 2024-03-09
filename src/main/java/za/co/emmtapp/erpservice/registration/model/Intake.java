@@ -18,6 +18,9 @@ public class Intake extends BaseEntity {
     @Column(name = "intake_name", nullable = false, length = 45)
     String intakeName;
 
+    @Column(name = "course_id", nullable = false, length = 45)
+    String courseId;
+
     @Column(name = "start_date", nullable = false, length = 45)
     String startDate;
 

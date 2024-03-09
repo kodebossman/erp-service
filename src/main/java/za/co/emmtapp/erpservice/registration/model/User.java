@@ -1,15 +1,11 @@
 package za.co.emmtapp.erpservice.registration.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import za.co.emmtapp.erpservice.common.BaseEntity;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -66,8 +62,4 @@ public class User extends BaseEntity {
 
     @Column(name = "gender")
     private String gender;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "enrolledUsers")
-    Set<Course> enrolledCourses = new HashSet<>();
 }

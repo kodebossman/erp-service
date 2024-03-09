@@ -18,7 +18,13 @@ public class RegistrationAPI {
     }
 
     @PostMapping("/course")
-    public void registerUserForCourse(@RequestParam Long userId, @RequestParam Long courseId, @RequestParam long intakeId) {
-        registrationService.registerUserForCourse(userId, courseId, intakeId);
+    public void registerUserForCourse(@RequestParam Long userId, @RequestParam long intakeId) {
+        registrationService.enrollUserInCourse(userId, intakeId);
     }
+
+    @PostMapping("/addModule")
+    public void addModuleToEnrolment (@RequestParam Long enrolmentId, @RequestParam long moduleId) {
+        registrationService.addModuleToEnrollment(enrolmentId, moduleId);
+    }
+
 }

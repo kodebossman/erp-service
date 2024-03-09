@@ -3,21 +3,21 @@ package za.co.emmtapp.erpservice.registration.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import za.co.emmtapp.erpservice.common.BaseEntity;
 
 @Entity
-@Table(name = "user_course")
+@Table(name = "enrollments")
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class UserCourse {
-    @Id
-    @Column(name = "user_id", nullable = false, length = 45)
-    long userId;
+public class Enrollment extends BaseEntity {
+    @Column(name = "userId", nullable = false, length = 45)
+    Long userId;
 
-    @Column(name = "course_id", nullable = false, length = 45)
-    long courseId;
+    @Column(name = "intake_id", nullable = false, length = 45)
+    Long intakeId;
 }

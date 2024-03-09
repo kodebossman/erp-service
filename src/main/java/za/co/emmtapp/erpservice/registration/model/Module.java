@@ -1,9 +1,6 @@
 package za.co.emmtapp.erpservice.registration.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import za.co.emmtapp.erpservice.common.BaseEntity;
@@ -12,10 +9,12 @@ import za.co.emmtapp.erpservice.common.BaseEntity;
 @Setter
 @Entity
 public class Module extends BaseEntity {
+    @Column(name = "module_name", nullable = false, length = 45)
     private String moduleName;
-    private String moduleDescription;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
-    private Course course;
+    @Column(name = "course_id", nullable = false, length = 45)
+    private Long course_id;
+
+    @Column(name = "module_description", nullable = false, length = 45)
+    private String moduleDescription;
 }

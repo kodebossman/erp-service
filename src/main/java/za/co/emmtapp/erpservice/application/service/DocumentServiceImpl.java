@@ -8,6 +8,7 @@ import za.co.emmtapp.erpservice.application.model.dto.DocumentationDTO;
 import za.co.emmtapp.erpservice.application.repos.DocumentationRepository;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,9 +64,18 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<DocumentationDTO> findAllByOwnerId(String ownerId) {
-        List<Documentation> docs = documentationRepository.findAllByOwnerId(ownerId);
+        List<Documentation> documentationList = documentationRepository.findAllByOwnerId(ownerId);
+
         DocumentationDTO documentationDTO = new DocumentationDTO();
-        return docs.stream().map(documentation -> documentationDTO).toList();
+        return documentationList.stream().map(documentation -> mapToDocumentationDto(documentation, documentationDTO)).toList();
+    }
+
+    private DocumentationDTO mapToDocumentationDto(Documentation documentation, DocumentationDTO documentationDTO) {
+        documentationDTO.setOwnerId(documentation.getOwnerId());
+        documentationDTO.setDocumentName(documentation.getDocumentName());
+        documentationDTO.setDocumentURL(documentation.getDocumentURL());
+        documentationDTO.setDocumentType(documentation.getDocumentType());
+        return documentationDTO;
     }
 
 }
