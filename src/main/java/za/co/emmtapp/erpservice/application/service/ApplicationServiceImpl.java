@@ -129,10 +129,10 @@ public class ApplicationServiceImpl implements ApplicationService {
             personalDetailsService.update(personalDetailsDTO);
         }
 
-        if (documentationDTO != null) {
-            documentationDTO.forEach(documentService::update);
-
-        }
+//        if (documentationDTO != null) {
+//            documentationDTO.forEach(documentService::update);
+//
+//        }
 
         if (employmentDetailsDTO != null) {
             employmentDetailsService.update(employmentDetailsDTO);

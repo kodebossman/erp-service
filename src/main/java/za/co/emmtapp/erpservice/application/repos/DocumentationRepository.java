@@ -13,4 +13,6 @@ public interface DocumentationRepository extends JpaRepository<Documentation, Lo
 
     List<Documentation> findAllByOwnerId(String ownerId);
 
+    Optional<Documentation> findDistinctByOwnerId(String ownerId);
+
 }

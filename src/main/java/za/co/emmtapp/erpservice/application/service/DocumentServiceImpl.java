@@ -43,6 +43,7 @@ public class DocumentServiceImpl implements DocumentService {
     public boolean update(DocumentationDTO documentationDTO) {
         boolean isUpdated = false;
 
+
         if (documentationDTO != null) {
             Documentation documentation = documentationRepository.findByOwnerId(documentationDTO.getOwnerId()).orElseThrow(
                     () -> new ResourceNotFoundException("application with provided Id not found")
@@ -64,10 +65,10 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<DocumentationDTO> findAllByOwnerId(String ownerId) {
-        List<Documentation> documentationList = documentationRepository.findAllByOwnerId(ownerId);
+        List<Documentation> docs = documentationRepository.findAllByOwnerId(ownerId);
 
         DocumentationDTO documentationDTO = new DocumentationDTO();
-        return documentationList.stream().map(documentation -> mapToDocumentationDto(documentation, documentationDTO)).toList();
+        return docs.stream().map(documentation -> mapToDocumentationDto(documentation, documentationDTO)).toList();
     }
 
     private DocumentationDTO mapToDocumentationDto(Documentation documentation, DocumentationDTO documentationDTO) {
