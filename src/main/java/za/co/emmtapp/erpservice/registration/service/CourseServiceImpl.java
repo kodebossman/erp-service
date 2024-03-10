@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
 import za.co.emmtapp.erpservice.registration.model.Course;
+import za.co.emmtapp.erpservice.registration.model.CourseType;
 import za.co.emmtapp.erpservice.registration.model.dto.CourseDTO;
 import za.co.emmtapp.erpservice.registration.repository.CourseRepository;
 import za.co.emmtapp.erpservice.registration.repository.ModuleRepository;
@@ -22,13 +23,11 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
 
-    private final UserRepository userRepository;
-
-    private final ModuleRepository moduleRepository;
+    private CourseFactory courseFactory;
 
     @Override
     public CourseDTO create(CourseDTO courseDTO) {
-        Course course = new Course();
+        Course course = courseFactory.createCourse(courseDTO.getCourseType());
         BeanUtils.copyProperties(courseDTO, course);
         courseRepository.save(course);
         return courseDTO;
@@ -83,7 +82,7 @@ public class CourseServiceImpl implements CourseService {
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setCourseName(course.getCourseName());
         courseDTO.setCapacity(course.getCapacity());
-//        courseDTO.setEnrolledUsers(course.getEnrolledUsers());
+        courseDTO.setCourseDescription(course.getCourseDescription());
 
         return courseDTO;
     }
