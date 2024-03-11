@@ -8,7 +8,7 @@ public interface CourseService {
 
     CourseDTO find(Long id);
 
-    boolean update(CourseDTO courseDTO);
+    CourseDTO update(CourseDTO courseDTO);
 
     boolean delete(Long id);
     PaginationResult<CourseDTO> findAll(String search, Integer page, Integer size, String sortBy);

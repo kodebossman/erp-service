@@ -2,14 +2,13 @@ package za.co.emmtapp.erpservice.registration.model.dto;
 
 import lombok.Data;
 import za.co.emmtapp.erpservice.registration.model.CourseType;
-import za.co.emmtapp.erpservice.registration.model.User;
-
-import java.util.HashSet;
-import java.util.Set;
-
 @Data
 public class CourseDTO {
+    private Long id;
+
     private String courseName;
+
+    String courseCode;
 
     private long capacity;
 

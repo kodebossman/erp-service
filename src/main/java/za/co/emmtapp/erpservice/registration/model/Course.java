@@ -23,6 +23,9 @@ public class Course extends BaseEntity {
     @Column(name = "course_description", nullable = false, length = 245)
     String courseDescription;
 
+    @Column(name = "course_code", nullable = false, length = 245)
+    String courseCode;
+
     @Column(name = "capacity", nullable = false, length = 45)
     long capacity;
 

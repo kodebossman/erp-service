@@ -29,7 +29,8 @@ public class CourseServiceImpl implements CourseService {
     public CourseDTO create(CourseDTO courseDTO) {
         Course course = courseFactory.createCourse(courseDTO.getCourseType());
         BeanUtils.copyProperties(courseDTO, course);
-        courseRepository.save(course);
+        Course savedCourse = courseRepository.save(course);
+        BeanUtils.copyProperties(savedCourse, courseDTO);
         return courseDTO;
     }
 
@@ -44,20 +45,18 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean update(CourseDTO courseDTO) {
-        boolean isUpdated = false;
+    public CourseDTO update(CourseDTO courseDTO) {
+        if (courseDTO != null) {
+            Course course = courseRepository.findById(courseDTO.getId()).orElseThrow(
+                    () -> new ResourceNotFoundException("Course with Id " + courseDTO.getId() + " not found")
+            );
 
-//        if (courseDTO != null) {
-//            Course course = courseRepository.findById(courseDTO.ge).orElseThrow(
-//                    () -> new ResourceNotFoundException("application with provided Id not found")
-//            );
-//
-//            BeanUtils.copyProperties(documentationDTO, documentation);
-//
-//            documentationRepository.save(documentation);
-//            isUpdated = true;
-//        }
-        return isUpdated;
+            BeanUtils.copyProperties(courseDTO, course);
+
+            Course savedCourse = courseRepository.save(course);
+            BeanUtils.copyProperties(savedCourse, courseDTO);
+        }
+        return courseDTO;
     }
 
     @Override
@@ -80,6 +79,8 @@ public class CourseServiceImpl implements CourseService {
 
     private CourseDTO convertToCourseDto(Course course) {
         CourseDTO courseDTO = new CourseDTO();
+        courseDTO.setId(course.getId());
+        courseDTO.setCourseCode(course.getCourseCode());
         courseDTO.setCourseName(course.getCourseName());
         courseDTO.setCapacity(course.getCapacity());
         courseDTO.setCourseDescription(course.getCourseDescription());
