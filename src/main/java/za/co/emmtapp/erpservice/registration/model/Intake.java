@@ -19,7 +19,7 @@ public class Intake extends BaseEntity {
     String intakeName;
 
     @Column(name = "course_id", nullable = false, length = 45)
-    String courseId;
+    Long courseId;
 
     @Column(name = "start_date", nullable = false, length = 45)
     String startDate;

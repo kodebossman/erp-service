@@ -3,11 +3,8 @@ package za.co.emmtapp.erpservice.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import za.co.emmtapp.erpservice.application.model.dto.ApplicationDTO;
 import za.co.emmtapp.erpservice.common.ApiResponse;
 import za.co.emmtapp.erpservice.common.PaginationResult;
-import za.co.emmtapp.erpservice.registration.model.Course;
-import za.co.emmtapp.erpservice.registration.model.Module;
 import za.co.emmtapp.erpservice.registration.model.dto.CourseDTO;
 import za.co.emmtapp.erpservice.registration.service.CourseService;
 
@@ -22,8 +19,8 @@ public class CourseAPI {
 
     @PostMapping("/create")
     public ApiResponse<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO) {
-        courseService.create(courseDTO);
-        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, courseDTO);
+        CourseDTO savedCourse = courseService.create(courseDTO);
+        return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, savedCourse);
     }
 
     @PutMapping("/update")
