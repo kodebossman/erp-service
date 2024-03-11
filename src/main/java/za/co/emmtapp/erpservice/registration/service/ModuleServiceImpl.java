@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
+import za.co.emmtapp.erpservice.registration.model.Course;
 import za.co.emmtapp.erpservice.registration.model.Module;
 import za.co.emmtapp.erpservice.registration.model.dto.ModuleDTO;
 import za.co.emmtapp.erpservice.registration.repository.ModuleRepository;
@@ -24,7 +25,8 @@ public class ModuleServiceImpl implements ModuleService {
     public ModuleDTO create(ModuleDTO moduleDTO) {
         Module module = new Module();
         BeanUtils.copyProperties(moduleDTO, module);
-        moduleRepository.save(module);
+        Module savedModule = moduleRepository.save(module);
+        BeanUtils.copyProperties(savedModule, moduleDTO);
         return moduleDTO;
     }
 
@@ -39,8 +41,18 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public boolean update(ModuleDTO moduleDTO) {
-        return false;
+    public ModuleDTO update(ModuleDTO moduleDTO) {
+        if (moduleDTO != null) {
+            Module module = moduleRepository.findById(moduleDTO.getId()).orElseThrow(
+                    () -> new ResourceNotFoundException("Course with Id " + moduleDTO.getId() + " not found")
+            );
+
+            BeanUtils.copyProperties(moduleDTO, module);
+
+            Module savedModule = moduleRepository.save(module);
+            BeanUtils.copyProperties(savedModule, moduleDTO);
+        }
+        return moduleDTO;
     }
 
     @Override

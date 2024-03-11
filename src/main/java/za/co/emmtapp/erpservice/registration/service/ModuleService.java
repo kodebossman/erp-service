@@ -8,7 +8,7 @@ public interface ModuleService {
     ModuleDTO create(ModuleDTO moduleDTO);
     ModuleDTO find(Long id);
 
-    boolean update(ModuleDTO moduleDTO);
+    ModuleDTO update(ModuleDTO moduleDTO);
 
     boolean delete(Long id);
 

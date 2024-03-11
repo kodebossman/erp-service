@@ -25,6 +25,13 @@ public class ModuleAPI {
         return new ApiResponse<>(HttpStatus.CREATED.value(), APP_SUCCESS_MESSAGE, moduleDTO);
     }
 
+    @PutMapping("/update")
+    public ApiResponse<ModuleDTO> update(@RequestBody ModuleDTO moduleDTO) {
+        ModuleDTO savedModuleDTO = moduleService.update(moduleDTO);
+        return new ApiResponse<>(UPDATE_SUCCESS, APP_UPDATE_MESSAGE, savedModuleDTO);
+    }
+
+
     @GetMapping("/{id}")
     public ApiResponse<ModuleDTO> findModule(@PathVariable Long id) {
         ModuleDTO moduleDTO = moduleService.find(id);
