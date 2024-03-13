@@ -17,7 +17,7 @@ public class UserDTO {
     private String postalCode;
     private String country;
     private String mobileNumber;
-    private String emailAddress;
+    private String email;
     private String nationality;
     private String gender;
 }

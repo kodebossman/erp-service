@@ -34,6 +34,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             User user = mapApplicantToUser(applicant);
             user.setUsername(userDTO.getUsername());
             user.setPassword(userDTO.getPassword());
+            user.setEmail(userDTO.getEmail());
             User savedUser = userRepository.save(user);
             BeanUtils.copyProperties(savedUser, userDTO);
         }
