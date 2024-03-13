@@ -32,7 +32,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         if (applicant != null) {
             User user = mapApplicantToUser(applicant);
-            user.setUsername(userDTO.getUsername());
             user.setPassword(userDTO.getPassword());
             user.setEmail(userDTO.getEmail());
             User savedUser = userRepository.save(user);

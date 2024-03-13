@@ -22,53 +22,18 @@ import java.util.List;
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User extends BaseEntity implements UserDetails {
-    @Column(name = "username", nullable = false, length = 45)
-    private String username;
 
-    @Column(name = "password", nullable = false, length = 45)
+    @Column(name = "password", nullable = false, length = 250)
     private String password;
 
-    @Column(name = "title", nullable = false, length = 45)
-    private String title;
-
-    @Column(name = "first_name", nullable = false, length = 45)
+    @Column(name = "first_name", nullable = false, length = 250)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 45)
+    @Column(name = "last_name", nullable = false, length = 250)
     private String lastName;
 
-    @Column(name = "preferred_name", nullable = false, length = 45)
-    private String preferredName;
-
-    @Column(name = "id_number", unique = true, nullable = false, length = 10)
-    private String idNumber;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "province")
-    private String province;
-
-    @Column(name = "postalCode")
-    private String postalCode;
-
-    @Column(name = "country")
-    private String country;
-
-    @Column(name = "phone", nullable = false, length = 12) // unique = true,
-    private String mobileNumber;
-
-    @Column(name = "email",  nullable = false, length = 45) // unique = true,
+    @Column(name = "email",  nullable = false, length = 450, unique = true)
     private String email;
-
-    @Column(name = "nationality")
-    private String nationality;
-
-    @Column(name = "gender")
-    private String gender;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -76,6 +41,11 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override

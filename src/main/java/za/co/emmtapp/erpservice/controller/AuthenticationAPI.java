@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.emmtapp.erpservice.security.model.JwtAuthenticationResponse;
+import za.co.emmtapp.erpservice.security.model.SignUpRequest;
 import za.co.emmtapp.erpservice.security.model.SigninRequest;
 import za.co.emmtapp.erpservice.security.service.AuthenticationService;
 
@@ -15,10 +16,10 @@ import za.co.emmtapp.erpservice.security.service.AuthenticationService;
 @RequiredArgsConstructor
 public class AuthenticationAPI {
     private final AuthenticationService authenticationService;
-//    @PostMapping("/signup")
-//    public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest request) {
-//        return ResponseEntity.ok(authenticationService.signup(request));
-//    }
+    @PostMapping("/signup")
+    public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest request) {
+        return ResponseEntity.ok(authenticationService.signup(request));
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request) {
