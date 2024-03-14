@@ -7,5 +7,5 @@ import za.co.emmtapp.erpservice.security.model.SigninRequest;
 public interface AuthenticationService {
     JwtAuthenticationResponse signup(SignUpRequest request);
 
-    JwtAuthenticationResponse signin(SigninRequest request);
+    JwtAuthenticationResponse signIn(SigninRequest request);
 }
