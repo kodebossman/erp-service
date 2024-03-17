@@ -1,4 +1,4 @@
-package za.co.emmtapp.erpservice.security.model;
+package za.co.emmtapp.erpservice.security.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

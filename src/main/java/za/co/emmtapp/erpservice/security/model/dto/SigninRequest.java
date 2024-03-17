@@ -1,4 +1,4 @@
-package za.co.emmtapp.erpservice.security.model;
+package za.co.emmtapp.erpservice.security.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpRequest {
-    private String firstName;
-    private String lastName;
+public class SigninRequest {
     private String email;
     private String password;
 }

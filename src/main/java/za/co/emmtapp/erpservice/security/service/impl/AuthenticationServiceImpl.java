@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.registration.model.Role;
 import za.co.emmtapp.erpservice.registration.model.User;
 import za.co.emmtapp.erpservice.registration.repository.UserRepository;
-import za.co.emmtapp.erpservice.security.model.JwtAuthenticationResponse;
-import za.co.emmtapp.erpservice.security.model.SignUpRequest;
-import za.co.emmtapp.erpservice.security.model.SigninRequest;
+import za.co.emmtapp.erpservice.security.model.Token;
+import za.co.emmtapp.erpservice.security.model.TokenType;
+import za.co.emmtapp.erpservice.security.model.dto.JwtAuthenticationResponse;
+import za.co.emmtapp.erpservice.security.model.dto.SignUpRequest;
+import za.co.emmtapp.erpservice.security.model.dto.SigninRequest;
+import za.co.emmtapp.erpservice.security.repository.TokenRepository;
 import za.co.emmtapp.erpservice.security.service.AuthenticationService;
 import za.co.emmtapp.erpservice.security.service.JwtService;
 
@@ -18,8 +21,13 @@ import za.co.emmtapp.erpservice.security.service.JwtService;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
+
+    private final TokenRepository tokenRepository;
+
     private final PasswordEncoder passwordEncoder;
+
     private final JwtService jwtService;
+
     private final AuthenticationManager authenticationManager;
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
@@ -28,6 +36,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .role(Role.USER).build();
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwt);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
@@ -38,6 +48,31 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
         var jwt = jwtService.generateToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwt);
         return JwtAuthenticationResponse.builder().token(jwt).build();
+    }
+
+    private void revokeAllUserTokens(User user) {
+        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+
+        if (validUserTokens.isEmpty())
+            return;
+        validUserTokens.forEach(t -> {
+            t.setExpired(true);
+            t.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
+    }
+
+    private void saveUserToken(User user, String jwt) {
+        var token = Token.builder()
+                .user(user)
+                .token(jwt)
+                .tokenType(TokenType.BEARER)
+                .revoked(false)
+                .expired(false)
+                .build();
+        tokenRepository.save(token);
     }
 }

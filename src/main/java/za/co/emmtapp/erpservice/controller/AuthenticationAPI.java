@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.emmtapp.erpservice.security.model.JwtAuthenticationResponse;
-import za.co.emmtapp.erpservice.security.model.SignUpRequest;
-import za.co.emmtapp.erpservice.security.model.SigninRequest;
+import za.co.emmtapp.erpservice.security.model.dto.JwtAuthenticationResponse;
+import za.co.emmtapp.erpservice.security.model.dto.SignUpRequest;
+import za.co.emmtapp.erpservice.security.model.dto.SigninRequest;
 import za.co.emmtapp.erpservice.security.service.AuthenticationService;
 
 @RestController

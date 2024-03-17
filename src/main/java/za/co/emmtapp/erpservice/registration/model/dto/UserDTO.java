@@ -1,23 +1,14 @@
 package za.co.emmtapp.erpservice.registration.model.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import za.co.emmtapp.erpservice.common.BaseDto;
 
-@Data
-public class UserDTO {
-    private String username;
-    private String password;
-    private String title;
+@Getter
+@Setter
+public class UserDTO extends BaseDto {
     private String firstName;
     private String lastName;
-    private String preferredName;
-    private String idNumber;
-    private String address;
-    private String city;
-    private String province;
-    private String postalCode;
-    private String country;
-    private String mobileNumber;
     private String email;
-    private String nationality;
-    private String gender;
 }
