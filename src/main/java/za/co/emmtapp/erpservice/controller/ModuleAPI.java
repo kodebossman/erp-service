@@ -10,6 +10,8 @@ import za.co.emmtapp.erpservice.registration.model.dto.CourseDTO;
 import za.co.emmtapp.erpservice.registration.model.dto.ModuleDTO;
 import za.co.emmtapp.erpservice.registration.service.ModuleService;
 
+import java.util.List;
+
 import static za.co.emmtapp.erpservice.common.ApiConstants.*;
 
 @AllArgsConstructor
@@ -36,6 +38,12 @@ public class ModuleAPI {
     public ApiResponse<ModuleDTO> findModule(@PathVariable Long id) {
         ModuleDTO moduleDTO = moduleService.find(id);
         return new ApiResponse<>(HttpStatus.OK.value(), APP_RETRIEVE_SUCCESS, moduleDTO);
+    }
+
+    @GetMapping("/findByCourseId")
+    public ApiResponse<List<ModuleDTO>> findModulesByCourseId(@RequestParam Long courseId) {
+        List<ModuleDTO> moduleDTOS = moduleService.findModulesByCourseId(courseId);
+        return new ApiResponse<>(HttpStatus.OK.value(), APP_RETRIEVE_SUCCESS, moduleDTOS);
     }
 
     @DeleteMapping("/{id}")

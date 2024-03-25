@@ -1,6 +1,5 @@
 package za.co.emmtapp.erpservice.registration.model.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import za.co.emmtapp.erpservice.common.BaseDto;

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import za.co.emmtapp.erpservice.common.PaginationResult;
 import za.co.emmtapp.erpservice.exceptions.ResourceNotFoundException;
-import za.co.emmtapp.erpservice.registration.model.Course;
 import za.co.emmtapp.erpservice.registration.model.Module;
 import za.co.emmtapp.erpservice.registration.model.dto.ModuleDTO;
 import za.co.emmtapp.erpservice.registration.repository.ModuleRepository;
@@ -59,6 +58,12 @@ public class ModuleServiceImpl implements ModuleService {
     public boolean delete(Long id) {
         moduleRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<ModuleDTO> findModulesByCourseId(Long courseId) {
+        ModuleDTO moduleDTO = new ModuleDTO();
+        return moduleRepository.findModulesByCourseId(courseId).stream().map(this::convertToModuleDto).toList();
     }
 
     @Override
