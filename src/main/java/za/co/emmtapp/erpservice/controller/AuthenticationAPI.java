@@ -1,5 +1,7 @@
 package za.co.emmtapp.erpservice.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,8 @@ import za.co.emmtapp.erpservice.security.model.dto.SignUpRequest;
 import za.co.emmtapp.erpservice.security.model.dto.SigninRequest;
 import za.co.emmtapp.erpservice.security.service.AuthenticationService;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -19,6 +23,13 @@ public class AuthenticationAPI {
     @PostMapping("/signup")
     public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest request) {
         return ResponseEntity.ok(authenticationService.signup(request));
+    }
+
+    @PostMapping("/refresh-token")
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        authenticationService.refreshToken(request, response);
     }
 
     @PostMapping("/signin")
